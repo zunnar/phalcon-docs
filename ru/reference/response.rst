@@ -8,16 +8,16 @@ component designed to achieve this task. HTTP responses are usually composed by 
 
     <?php
 
-    // Getting a response instance
+    // Получение экземпляра Response
     $response = new \Phalcon\Http\Response();
 
-    //Set status code
+    // Установка кода статуса
     $response->setRawHeader(404, "Not Found");
 
-    //Set the content of the response
-    $response->setContent("Sorry, the page doesn't exist");
+    // Установка содержимого ответа
+    $response->setContent("Сожалеем, но страница не существует");
 
-    //Send response to the client
+    // Отправка ответа клиенту
     $response->send();
 
 Keep in mind that if you're using the full MVC stack there is no need to create responses manually. However, if you need to return a responde
@@ -32,36 +32,36 @@ directly from a controller's action follow this example:
 
         public function getAction()
         {
-            // Getting a response instance
+            // Получение экземпляра Response
             $response = new \Phalcon\Http\Response();
 
-            $feed = //.. load here the feed
+            $feed = //.. тут данные
 
-            //Set the content of the response
+            // Установка содержимого ответа
             $response->setContent($feed->asString());
 
-            //Return the response
+            // Возврат Response ответа
             return $response;
         }
 
     }
 
-Working with Headers
+Работа с заголовками
 --------------------
 Headers are an important part of the whole HTTP response. It contains useful information about the response state like the HTTP status,
 type of response and much more.
 
-You can set headers in the following way:
+Указывать заголовки можно следующим образом:
 
 .. code-block:: php
 
     <?php
 
-    //Setting it by its name
+    // Установка по имени
     $response->setHeader("Content-Type", "application/pdf");
     $response->setHeader("Content-Disposition", 'attachment; filename="downloaded.pdf"');
 
-    //Setting a raw header
+    // Установка напрямую
     $response->setRawHeader("HTTP/1.1 200 OK");
 
 A :doc:`Phalcon\\HTTP\\Response\\Headers <../api/Phalcon_Http_Response_Headers>` bag internally manages headers. This class
@@ -71,30 +71,30 @@ allows to manage headers before sending it to client:
 
     <?php
 
-    //Get the headers bag
+    // Получение всех заголовков
     $headers = $response->getHeaders();
 
-    //Get a header by its name
+    // Получение заголовка по имени
     $contentType = $response->getHeaders()->get("Content-Type");
 
-Making Redirections
--------------------
-With :doc:`Phalcon\\HTTP\\Response <../api/Phalcon_Http_Response>` you can also make HTTP redirections:
+Создание перенаправлений (редиректы)
+------------------------------------
+С помощью :doc:`Phalcon\\HTTP\\Response <../api/Phalcon_Http_Response>` вы можите выполнять переадресовывания HTTP:
 
 .. code-block:: php
 
     <?php
 
-    //Making a redirection to the default URI
+    // Переадресация на корневой URI
     $response->redirect();
 
-    //Making a redirection using the local base URI
+    // Перенаправление на внутренний URI
     $response->redirect("posts/index");
 
-    //Making a redirection to an external URL
+    // Перенаправление на внешнюю ссылку
     $response->redirect("http://en.wikipedia.org", true);
 
-    //Making a redirection specifyng the HTTP status code
+    // Перенаправление со специальным HTTP кодом
     $response->redirect("http://www.example.com/new-location", true, 301);
 
 All internal URIs are generated using the 'url' service (by default :doc:`Phalcon\\Mvc\\Url <url>`), in this way you can make redirections
@@ -104,7 +104,7 @@ based on the routes you've currently defined in the application:
 
     <?php
 
-    //Making a redirection based on a named route
+    // Редирект по именованному правилу роутинга
     $response->redirect(array(
         "for" => "index-lang",
         "lang" => "jp",
@@ -114,8 +114,8 @@ based on the routes you've currently defined in the application:
 Note that making a redirection doesn't disable the view component, so if there is a view asociated with the current action it
 will be executed anyway. You can disable the view from a controller by executing $this->view->disable();
 
-HTTP Cache
-----------
+HTTP кеш
+--------
 One of the easiest ways to improve the performance in your applications also reducing the traffic is the HTTP Cache.
 Most modern browsers support HTTP caching and is one of the reasons why many websites are currently fast.
 
@@ -126,8 +126,8 @@ The secret are the headers sent by the application when serving a page for the f
 * *Last-Modified:* This header tells the browser which was the last time the site was updated avoiding page re-loads
 * *ETag:* An etag is a unique identifier that must be created including the modification timestamp of the current page
 
-Setting an Expiration Time
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Expires
+^^^^^^^
 The expiration date is one of the most easy and effective ways to cache a page in the client (browser).
 Starting from the current date we add over time, then, this will maintain the page stored
 in the browser cache until this date expires without requesting the content to the server again:
@@ -166,7 +166,7 @@ how much time it must keep the page in its cache:
 
     <?php
 
-    //Starting from now, cache the page for one day
+    // Кешировать на сутки с текущего момента
     $response->setHeader('Cache-Control', 'max-age=86400');
 
 The opposite effect (avoid page caching) is achieved in this way:
@@ -175,7 +175,7 @@ The opposite effect (avoid page caching) is achieved in this way:
 
     <?php
 
-    //Never cache the served page
+    // Не кешировать
     $response->setHeader('Cache-Control', 'private, max-age=0, must-revalidate');
 
 E-Tag
@@ -191,7 +191,7 @@ The identifier must be calculated taking into account that this must change if t
     $recentDate = News::maximum(array('column' => 'created_at'));
     $eTag = md5($recentDate);
 
-    //Send a E-Tag header
+    // Отправка E-Tag
     $response->setHeader('E-Tag', $eTag);
 
 

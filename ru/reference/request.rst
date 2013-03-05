@@ -118,7 +118,7 @@ $_GET и $_POST массивам и обезопасивает или фильт
 
     }
 
-Каждый объект, возвращаемый Phalcon\\Http\\Request::getUploadedFiles() является инстанцией для
+Каждый объект, возвращаемый Phalcon\\Http\\Request::getUploadedFiles() является экземпляром
 :doc:`Phalcon\\Http\\Request\\File <../api/Phalcon_Http_Request_File>`. Использование суперглобального массива $_FILES 
 предоставляет такое же поведение. :doc:`Phalcon\\Http\\Request\\File <../api/Phalcon_Http_Request_File>` инкапсулирует
 только информацию, относящуюся к каждому загруженному в текущем запросе файлу.
