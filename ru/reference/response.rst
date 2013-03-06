@@ -110,20 +110,21 @@
         "controller" => "index"
     ));
 
-Обратите внимание, что при создании перенаправления не отключается компонент отображения (Views), так что действие в котором оно вызывается всё 
-равно будет выполнено. Вы можете отключить отображение из контроллера, выполнив $this->view->disable();
+Обратите внимание, что при создании перенаправления не отключается компонент отображения (Views), так что действие в котором
+оно вызывается всё равно будет выполнено. Вы можете отключить отображение из контроллера, выполнив $this->view->disable();
 
 HTTP кеширование
 ----------------
-One of the easiest ways to improve the performance in your applications also reducing the traffic is the HTTP Cache.
-Most modern browsers support HTTP caching and is one of the reasons why many websites are currently fast.
+Одним из самых простых способов повышения производительности приложения является снижение трафика с помощью HTTP кеширования.
+Большинство современных браузеров поддерживают HTTP кеширование и это является одной из причин, почему многие веб-сайты в настоящее
+время работают достаточно быстро.
 
-The secret are the headers sent by the application when serving a page for the first time, these headers are:
+Секретные заголовки отправляемые при первой передаче страницы:
 
-* *Expires:* With this header the application can set a date in the future or the past telling the browser when the page must expire.
-* *Cache-Control:* This header allows to specify how much time a page should be considered fresh in the browser.
-* *Last-Modified:* This header tells the browser which was the last time the site was updated avoiding page re-loads
-* *ETag:* An etag is a unique identifier that must be created including the modification timestamp of the current page
+* *Expires:* Устанавливая этот заголовок в прошлое или будующее можно указывать бразууру срок жизни страницы.
+* *Cache-Control:* Позволяет указать сколько времени страница должна считаться для браузера актуальной.
+* *Last-Modified:* Указывает браузеру когда было последнее изменение страницы, что позволяет избежать повторной загрузки страницы.
+* *ETag:* Представляет собой уникальный идентификатор, который должен быть сформирован с учетом времени изменения текущей страницы.
 
 Expires
 ^^^^^^^
