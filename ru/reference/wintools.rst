@@ -38,7 +38,7 @@
 
 В нижней части диалога обратите внимание на раздел "System variables" и отредактируйте переменную "Path":
 .. figure:: ../_static/img/path-3.png
-		:align: center
+   :align: center
 
 Будьте осторожны на этом шаге! В конце этой длинной строки вам надо будет добавить путь к установленному файлы php.exe и путь к установленным инструментам разработчика Phalcon. Используйте символ ";" для разделения: 
 
@@ -65,9 +65,9 @@
 Дополнительные руководства
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* :doc:`Using Developer Tools <tools>`
-* :doc:`Installation on OS X <mactools>`
-* :doc:`Installation on Linux <linuxtools>`
+* :doc:`Использование инструментов разработчика <tools>`
+* :doc:`Установка на OS X <mactools>`
+* :doc:`Установка на Linux <linuxtools>`
 
-.. _Download: http://phalconphp.com/download
+.. _Скачать: http://phalconphp.com/download
 .. _Github: https://github.com/phalcon/phalcon-devtools
