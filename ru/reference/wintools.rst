@@ -37,6 +37,7 @@
    :align: center
 
 В нижней части диалога обратите внимание на раздел "System variables" и отредактируйте переменную "Path":
+
 .. figure:: ../_static/img/path-3.png
    :align: center
 
