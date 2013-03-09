@@ -1928,13 +1928,12 @@ that is performed operations over a model:
     <?php
 
     use Phalcon\Mvc\ModelInterface,
-        Phalcon\Mvc\Model\Behavior,
         Phalcon\Mvc\Model\BehaviorInterface;
 
     class Blameable extends Behavior implements BehaviorInterface
     {
 
-        public function notify($eventType, ModelInterface $model)
+        public function notify($eventType, $model)
         {
             switch ($eventType) {
 

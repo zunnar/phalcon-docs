@@ -3,15 +3,19 @@ Class **Phalcon\\Forms\\Element\\Text**
 
 *extends* :doc:`Phalcon\\Forms\\Element <Phalcon_Forms_Element>`
 
+Text component INPUT[type=text] for forms
+
+
 Methods
 ---------
 
-public  **render** ([*unknown* $attributes])
+public *string*  **render** ([*unknown* $attributes])
 
-...
+Renders the element widget
 
 
-public  **__construct** (*unknown* $name) inherited from Phalcon\\Forms\\Element
+
+public  **__construct** (*string* $name) inherited from Phalcon\\Forms\\Element
 
 Phalcon\\Forms\\Element constructor
 
@@ -29,16 +33,25 @@ public  **getName** () inherited from Phalcon\\Forms\\Element
 
 public  **addValidators** (*unknown* $validators) inherited from Phalcon\\Forms\\Element
 
-...
+Adds a group of validators
+
 
 
 public  **addValidator** (*unknown* $validator) inherited from Phalcon\\Forms\\Element
 
-...
+Adds a validator to the element
 
 
-public  **getValidators** () inherited from Phalcon\\Forms\\Element
 
-...
+public :doc:`Phalcon\\Validation\\ValidatorInterface <Phalcon_Validation_ValidatorInterface>` [] **getValidators** () inherited from Phalcon\\Forms\\Element
+
+Returns the validators registered for the element
+
+
+
+public *string*  **__toString** () inherited from Phalcon\\Forms\\Element
+
+Magic method __toString renders the widget without atttributes
+
 
 
