@@ -6,7 +6,7 @@ helpers to write views in an easy way. Volt is highly integrated with other comp
 just as you can use it as a stand-alone component in your applications.
 
 .. figure:: ../_static/img/volt.jpg
-:align: center
+   :align: center
 
 Volt is inspired on Jinja_, originally created by `Armin Ronacher`_. Therefore many developers will be in familiar
 ground using the same syntax they have been using with similar template engines. Volt’s syntax and features
