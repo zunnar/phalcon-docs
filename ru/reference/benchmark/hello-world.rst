@@ -1,34 +1,33 @@
-Hello World Benchmark
-=====================
+Тест производительности Hello World
+===================================
 
-How the benchmarks were performed?
-----------------------------------
-
-We created a "Hello World" benchmark seeking to identify the smallest load overhead of each framework. Many
-people don't like this kind of benchmark because real-world applications require more complex features or
-structures. However, these tests identify the minimum time spent by each framework to perform a simple task.
-Such a task represents the mimimum requirement for every framework to process a single request.
-
-More specifically, the benchmark only measures the time it takes for a framework to start, run an action and
-free up resources at the end of the request. Any PHP application based on an MVC architecture will require
-this time. Due to the simplicity of the benchmark, we ensure that the time needed for a more complex
-request will be higher.
-
-A controller and a view have been created for each framework. The controller "say" and action "hello". The
-action only sends data to the view which displays it ("Hello!"). Using the "ab" benchmark tool we sent 2000
-requests using 10 concurrent connections to each framework.
-
-What measurements were recorded?
---------------------------------
-These were the measurements we record to identify the overall performance of each framework:
-
-* Requests per second
-* Time across all concurrent requests
-* Number of included PHP files on a single request (measured using function get_included_files_.
-* Memory Usage per request (measured using function memory_get_usage_.
-
-Pariticipant Frameworks
+В чем суть тестирования
 -----------------------
+
+Мы создали тест "Hello World" с целью определить минимульную нагрузку создаваемую каждыйм из фреймворков. Большинство не любит такие 
+сравнения, потому что в реальных приложения используются более сложные функции и структуры. Однако, данный тест позволяет выявить
+минимальное время, необходимое каждому фреймворку для выполнения одной простой задачи. Такая задача требует выполнения минимальных
+условий для работы каждого фреймворка.
+
+По своей сути, тест только измеряет время необходимое фремворку для запуска, выполнения действия и освобождения ресурсов в в конце запроса.
+Любому PHP приложению с поддержкой MVC архитектуры на это требуется время. Выполняя простейший тест, мы можем быть уверены что время
+требуемое для более сложных операций будет выше.
+
+Контроллер и представление (view) были созданы для каждого фреймворка. Контроллер называется "say", а выполняемое действие "hello". Контроллер
+только передаетт в представление данные для отображения ("Hello!"). Для тестирования была использована утилита "ab", мы отправляли фреймворкам 
+2000 запросов с 10 одновременными подключениями.
+
+Какие измерения были выполнены
+------------------------------
+Параметры ниже были выбраны для сравнения производительности каждого фреймворка:
+
+* Число запросов в секунду (Requests per second)
+* Время на выполнение всех запросов в тесте
+* Число используемых файлов на один запрос (использована функция get_included_files_).
+* Использование памяти на запрос (использована функция memory_get_usage_).
+
+Соперники
+---------
 
 * Yii_ (YII_DEBUG=false) (yii-1.1.13)
 * Symfony_ (2.0.11)
@@ -40,11 +39,11 @@ Pariticipant Frameworks
 * CodeIgniter_ (2.1.0)
 * Nette_ (2.0.4)
 
-Results
--------
+Результаты
+----------
 
-Yii (YII_DEBUG=false) Version yii-1.1.13
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Yii (YII_DEBUG=false) версии yii-1.1.13
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: php
 
@@ -93,8 +92,8 @@ Yii (YII_DEBUG=false) Version yii-1.1.13
 	  99%     26
 	 100%     42 (longest request)
 
-Symfony Version 2.1.6
-^^^^^^^^^^^^^^^^^^^^^^
+Symfony версии 2.1.6
+^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: php
 
@@ -143,8 +142,8 @@ Symfony Version 2.1.6
 	  99%     30
 	 100%     61 (longest request)
 
-CodeIgniter 2.1.0
-^^^^^^^^^^^^^^^^^
+CodeIgniter версии 2.1.0
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: php
 
@@ -193,8 +192,8 @@ CodeIgniter 2.1.0
 	  99%     24
 	 100%     33 (longest request)
 
-Kohana 3.2.0
-^^^^^^^^^^^^
+Kohana версии 3.2.0
+^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: php
 
@@ -243,8 +242,8 @@ Kohana 3.2.0
 	  99%     31
 	 100%     64 (longest request)
 
-Fuel 1.2.1
-^^^^^^^^^^
+Fuel версии 1.2.1
+^^^^^^^^^^^^^^^^^
 
 .. code-block:: php
 
@@ -293,8 +292,8 @@ Fuel 1.2.1
 	  99%     38
 	 100%     80 (longest request)
 
-Cake 2.1.3
-^^^^^^^^^^
+Cake версии 2.1.3
+^^^^^^^^^^^^^^^^^
 
 .. code-block:: php
 
@@ -343,8 +342,8 @@ Cake 2.1.3
 	  99%  15040
 	 100%  15040 (longest request)
 
-Zend Framework 1.11.11
-^^^^^^^^^^^^^^^^^^^^^^
+Zend Framework версии 1.11.11
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: php
 
@@ -393,8 +392,8 @@ Zend Framework 1.11.11
 	  99%     62
 	 100%     90 (longest request)
 
-Laravel 3.2.5
-^^^^^^^^^^^^^
+Laravel версии 3.2.5
+^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: php
 
@@ -444,8 +443,8 @@ Laravel 3.2.5
 	  99%     48
 	 100%     93 (longest request)
 
-Nette 2.0.4
-^^^^^^^^^^^
+Nette версии 2.0.4
+^^^^^^^^^^^^^^^^^^
 
 .. code-block:: php
 
@@ -496,8 +495,8 @@ Nette 2.0.4
 	  99%     82
 	 100%    116 (longest request)
 
-Phalcon Version 0.8.0
-^^^^^^^^^^^^^^^^^^^^^
+Phalcon версии 0.8.0
+^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: php
 
@@ -546,10 +545,9 @@ Phalcon Version 0.8.0
 	  99%     14
 	 100%     23 (longest request)
 
-Graphs
-^^^^^^
-
-The first graph shows how many requests per second each framework was able to accept. The second shows the average time across all concurrent requests.
+Графики
+^^^^^^^
+Первый график показывает, сколько запросов в секунду смог принять каждый фреймворк. Второй график показывает среднее время выполнения всех запросов.
 
 
 .. raw:: html
@@ -672,10 +670,10 @@ The first graph shows how many requests per second each framework was able to ac
 		<div id="mpr_div" style="width: 600px; height: 400px; position: relative; "><iframe name="Drawing_Frame_77939" id="Drawing_Frame_77939" width="600" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><div></div></div>
 	</div>
 
-Conclusion
-----------
 
-The compiled nature of Phalcon offers extraordinary performance that outperforms all other frameworks measured in these benchmarks.
+Заключение
+----------
+Уникальная структура Phalcon предоставляет исключительную производительность и превосходит все используемые в этом тесте фреймворки.
 
 .. _get_included_files: http://www.php.net/manual/en/function.get-included-files.php
 .. _memory_get_usage: http://php.net/manual/en/function.memory-get-usage.php
