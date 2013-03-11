@@ -1,32 +1,30 @@
-Micro Benchmark
-=====================
+Тест производительности микро фреймворков
+=========================================
 
-How the benchmarks were performed?
-----------------------------------
+Какие тесты были выполнены?
+---------------------------
+Мы создали тест "Hello World", оказывающий минимальную нагрузку на каждый фреймворк. Единообразный тест выполнялся с каждым фреймворком.
+Используя маршрут для HTTP метода "GET" мы передаем параметр в обработчик и возвращаем ответ "Hello $name".
 
-We created a "Hello World" benchmark seeking to identify the smallest load overhead of each framework. Similar to the benchmark made with Frameworks.
+Какие измерения были учтены
+---------------------------
+Параметры ниже были выбраны для сравнения производительности каждого фреймворка:
 
-Using a route for the HTTP method 'GET' we pass a parameter to a handler returning a "Hello $name" response.
+* Число запросов в секунду (Requests per second)
+* Время на выполнение всех запросов в тесте
+* Число используемых файлов на один запрос (использована функция get_included_files_).
+* Использование памяти на запрос (использована функция memory_get_usage_).
 
-What measurements were recorded?
---------------------------------
-These were the measurements we record to identify the overall performance of each framework:
-
-* Requests per second
-* Time across all concurrent requests
-* Number of included PHP files on a single request (measured using function get_included_files_.
-* Memory Usage per request (measured using function memory_get_usage_.
-
-Pariticipant Frameworks
------------------------
+Соперники
+---------
 
 * Slim_
 * Silex_
 
-Results
--------
+Результаты
+----------
 
-Slim Framework
+Фреймворк Slim 
 ^^^^^^^^^^^^^^
 
 .. code-block:: php
@@ -76,8 +74,8 @@ Slim Framework
 	  99%     14
 	 100%     33 (longest request)
 
-Silex
-^^^^^^^^^^^^^^^^^^^^^^
+Фреймворк Silex
+^^^^^^^^^^^^^^^
 
 .. code-block:: php
 
@@ -127,7 +125,7 @@ Silex
 	 100%     45 (longest request)
 
 Phalcon 0.5.0
-^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^
 
 .. code-block:: php
 
@@ -178,10 +176,9 @@ Phalcon 0.5.0
 
 
 
-Graphs
-^^^^^^
-
-The first graph shows how many requests per second each framework was able to accept. The second shows the average time across all concurrent requests.
+Графики
+^^^^^^^
+Первый график показывает, сколько запросов в секунду смог принять каждый фреймворк. Второй график показывает среднее время выполнения всех запросов.
 
 
 .. raw:: html
@@ -280,9 +277,9 @@ The first graph shows how many requests per second each framework was able to ac
 		<div id="mpr_div" style="width: 600px; height: 400px; position: relative; "><iframe name="Drawing_Frame_77939" id="Drawing_Frame_77939" width="600" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><div></div></div>
 	</div>
 
-Conclusion
+Заключение
 ----------
-The compiled nature of Phalcon offers extraordinary performance that outperforms all other frameworks measured in these benchmarks.
+Уникальная структура Phalcon предоставляет исключительную производительность и превосходит все используемые в этом тесте фреймворки.
 
 .. _get_included_files: http://www.php.net/manual/en/function.get-included-files.php
 .. _memory_get_usage: http://php.net/manual/en/function.memory-get-usage.php
