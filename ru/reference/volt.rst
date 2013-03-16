@@ -1128,7 +1128,7 @@ Volt-компилятор позволяет вам расширить его, �
     <?php
 
     // Создание компилятора
-    $compiler = \Phalcon\Mvc\View\Engine\Volt\Compiler();
+    $compiler = new \Phalcon\Mvc\View\Engine\Volt\Compiler();
 
     // Добавление каких-то опций
     $compiler->setOptions(array(
