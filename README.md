@@ -1,19 +1,20 @@
-# Phalcon PHP Framework Documentation
+# Документация по фреймворку Phalcon PHP 
 
-## Welcome
+## Добро пожаловать
 
-This is the repository for the Phalcon PHP documentation. Our documentation is
-hosted on Read The Docs (http://www.readthedocs.org) which is automatically
-updated when any changes are made to this repository.
+Этот репозиторий создан для документации по Phalcon PHP. Наша документация размещена в сервисе
+Read The Docs (http://www.readthedocs.org) и автоматически обновляется при любых изменениях в этом репозиториии.
 
-You are welcome to fork this repository and add, correct, enhance the
-documentation yourselves.
+Русская версия до момента полного перевода располагается вне основной документации, актуальную версию всегд можно
+найти по адресу https://phalcon-docs-ru.readthedocs.org/ru/latest/
 
-The documentation language is reStructuredText (http://sphinx.pocoo.org/rest.html)
+Мы приглашаем вас делать fork этого репозитория и добавления, исправления и улучшения документации под себя.
+
+Документация написано с использованием синтаксиса reStructuredText (http://sphinx.pocoo.org/rest.html)
 
 # API
-The API is automatically generated from the C sources using the following command:
+Документация по API генерируется автоматически следующей командой:
 
     php scripts/gen-api.php
 
-If you find an error or want to improve it, please send a pull request to https://github.com/phalcon/cphalcon
+Если вы обнаружили ошибку или желаете поуучаствовать в улучшении - отправьте нам pull request на https://github.com/xboston/phalcon-docs/ или https://github.com/phalcon/cphalcon
