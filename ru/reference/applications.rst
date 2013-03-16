@@ -65,7 +65,7 @@ MVC Приложения
 
     $loader = new \Phalcon\Loader();
 
-    // Использование автозагрузки по преффиксу пространства имён
+    // Использование автозагрузки по префиксу пространства имён
     $loader->registerNamespaces(
         array(
             'Single\Controllers' => '../apps/controllers/',
