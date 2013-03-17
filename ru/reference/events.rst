@@ -1,13 +1,13 @@
-Events Manager
-==============
+Менеджер событий
+================
+Цель данного компонента состоит в добавлени возможности перехватывать процесс выполнения большинства компонентов системы путём создания
+специальных "ключевых точек". Это ключевые точки позволяют разработчику получить информацию о состсоянии, манипулировать данными и изменять 
+пройесс работы компонента.
 
-The purpose of this component is to intercept the execution of most of the components of the framework by creating “hooks point”. These hook
-points allow the developer to obtain status information, manipulate data or change the flow of execution during the process of a component.
-
-Usage Example
--------------
-In the following example, we use the EventsManager to listen for events produced in a MySQL connection managed by :doc:`Phalcon\\Db <../api/Phalcon_Db>`.
-First, we need a listener object to do this. We created a class whose methods are the events we want to listen:
+Пример использования
+--------------------
+В следующем примере, мы используем менеджер событий для прослушивания событий вызываемых в MySQL соединении управляемым :doc:`Phalcon\\Db <../api/Phalcon_Db>`.
+Для начала нам необходимо создать объект слушателея. Методы класса являются событиями, которые необходимо прослушивать.
 
 .. code-block:: php
 
@@ -33,8 +33,8 @@ First, we need a listener object to do this. We created a class whose methods ar
 
     }
 
-This new class can be as verbose as we need it to. The EventsManager will interface between the component and our listener class,
-offering hook points based on the methods we defined in our listener class:
+Такой класс может реализовывать необходимые нам события. Менеджер событий будет взаимодействовать между компонентом и нашим классом,
+вызывая события, реализованне методами класса и поддерживаемые компонентом.
 
 .. code-block:: php
 
@@ -42,10 +42,10 @@ offering hook points based on the methods we defined in our listener class:
 
     $eventsManager = new \Phalcon\Events\Manager();
 
-    //Create a database listener
+    // Создание слушателе базы данных
     $dbListener = new MyDbListener()
 
-    //Listen all the database events
+    // Слушать все события базы данных
     $eventsManager->attach('db', $dbListener);
 
     $connection = new \Phalcon\Db\Adapter\Pdo\Mysql(array(
@@ -55,10 +55,10 @@ offering hook points based on the methods we defined in our listener class:
         "dbname" => "invo"
     ));
 
-    //Assign the eventsManager to the db adapter instance
+    // Совмещение менеджера событий с адаптером базы данных
     $connection->setEventsManager($eventsManager);
 
-    //Send a SQL command to the database server
+    // Выполнение SQL запроса
     $connection->query("SELECT * FROM products p WHERE p.status = 1");
 
 In order to log all the SQL statements executed by our application, we need to use the event “afterQuery”. The first parameter passed to
@@ -151,8 +151,8 @@ In a similar manner we can register an lambda function to perform the task inste
         }
     });
 
-Creating components that trigger Events
----------------------------------------
+Создание компонентов с поддержкой событий
+-----------------------------------------
 You can create components in your application that trigger events to an EventsManager. As a consequence, there may exist listeners
 that react to these events when generated. In the following example we're creating a component called "MyComponent".
 This component is EventsManager aware; when its method "someTask" is executed it triggers two events to any listener in the EventsManager:
@@ -304,20 +304,20 @@ by passing "false" in the fourth parameter of fire:
 
     $eventsManager->fire("my-component:afterSomeTask", $this, $extraData, false);
 
-Listener Priorities
--------------------
-When attaching listeners you can set a specifical priority. With this feature you can attach listeners indicating the order
-in which they must be called:
+Настройка слушателей (Listener)
+-------------------------------
+При установке слушателей можно устанавливать их приоритет. Это позволяет указать порядок их вызова в момент выполнения.
 
 .. code-block:: php
 
     <?php
 
-    $evManager->attach('db', new DbListener(), 150); //More priority
-    $evManager->attach('db', new DbListener(), 100); //Normal priority
-    $evManager->attach('db', new DbListener(), 50); //Less priority
+    $evManager->attach('db', new DbListener(), 150); // Высокий приоритет
+    $evManager->attach('db', new DbListener(), 100); // Нормальный приоитет
+    $evManager->attach('db', new DbListener(), 50); // Низкий приоритет
 
-Implementing your own EventsManager
------------------------------------
-The :doc:`Phalcon\\Events\\ManagerInterface <../api/Phalcon_Events_ManagerInterface>` interface must be implemented to create your own
-EventsManager replacing the one provided by Phalcon.
+
+Создание собственных менеджеров событий (EventsManager)
+-------------------------------------------------------
+Для создания менеджера необходимо реализовать интерфейс :doc:`Phalcon\\Events\\ManagerInterface <../api/Phalcon_Events_ManagerInterface>` и
+заменить им стандартный менеджер EventsManager при инициализации Phalcon.
