@@ -408,6 +408,27 @@ If
 | loop.length          | Количество элементов для итерирования                                        |
 +----------------------+------------------------------------------------------------------------------+
 
+.. code-block:: html+jinja
+
+    {% for robot in robots %}
+    	{% if loop.first %}
+    		<table>
+    		<tr>
+                <th>#</th>
+    			<th>Id</th>
+    			<th>Name</th>
+    		</tr>
+    	{% endif %}
+    		<tr>
+                <td>{{ loop.index }}</td>
+    			<td>{{ robot.id }}</td>
+    			<td>{{ robot.name }}</td>
+    		</tr>
+    	{% if loop.last %}
+    		</table>
+    	{% endif %}
+    {% endfor %}
+
 Присваивания
 ------------
 Переменные могут быть изменены в шаблоне. для этого используется оператор "set":
