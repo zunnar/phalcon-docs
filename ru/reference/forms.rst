@@ -1,8 +1,8 @@
-Forms
+Формы
 -----
-Phalcon\Forms is a component aids the developer in the creation and maintenance of forms in web applications.
+Компонент Phalcon\Forms позволяет создавать и управлять формами вашего приложения.
 
-The following example shows its basic usage:
+Ниже представлен базовый пример работы с формами:
 
 .. code-block:: php
 
@@ -20,52 +20,52 @@ The following example shows its basic usage:
 		'C' => 'Cell'
 	)));
 
-Forms can be rendered based on the form definition:
+Элементы форм выводятся по указанным при создании имён:
 
 .. code-block:: html+php
 
-	<h1>Contacts</h1>
+	<h1>Контакты</h1>
 
 	<form method="post">
 
 		<p>
-			<label>Name</label>
+			<label>Имя</label>
 			<?php echo $form->render("name") ?>
 		</p>
 
 		<p>
-			<label>Telephone</label>
-			<?php echo $form->render("name") ?>
+			<label>Телефон</label>
+			<?php echo $form->render("telephone") ?>
 		</p>
 
 		<p>
-			<label>Type</label>
+			<label>Тип телефона</label>
 			<?php echo $form->render("telephoneType") ?>
 		</p>
 
 		<p>
-			<input type="submit" value="Save" />
+			<input type="submit" value="Сохранить" />
 		</p>
 
 	</form>
 
-Each element in the form can be rendered as required by the developer. Internally,
-:doc:`Phalcon\\Tag <../api/Phalcon_Tag>` is used to produce the right HTML for each element,
-you can pass additional html attributes as second parameter for render:
+Каждый элемент формы может быть настроен по желанию разработчика. Внутри компонент исполльзует возможности
+:doc:`Phalcon\\Tag <../api/Phalcon_Tag>` для генерации HTML кода каждого документа, вы можете передавать дополнительные
+html-атрибуты вторым параметром:
 
 .. code-block:: html+php
 
 	<p>
-		<label>Name</label>
-		<?php echo $form->render("name", array('maxlength' => 30, 'placeholder' => 'Type your name')) ?>
+		<label>Имя</label>
+		<?php echo $form->render("name", array('maxlength' => 30, 'placeholder' => 'Введите своё имя')) ?>
 	</p>
 
-HTML Attributes also can be set in the element's definition:
+Аттрибуты HTML могут быть указаны в параметрах при создании элемента:
 
 .. code-block:: php
 
 	$form->add(new Text("name", array(
 		'maxlength' => 30,
-		'placeholder' => 'Type your name'
+		'placeholder' => 'Введите своё имя'
 	)));
 
