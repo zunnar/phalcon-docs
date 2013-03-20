@@ -2315,7 +2315,6 @@ If a resultset is composed of complete objects, the resultset is in the ability 
 
 Updating related records
 ^^^^^^^^^^^^^^^^^^^^^^^^
-
 Instead of doing this:
 
 .. code-block:: php
@@ -2365,7 +2364,6 @@ you can do this:
 
 Deleting related records
 ^^^^^^^^^^^^^^^^^^^^^^^^
-
 Instead of doing this:
 
 .. code-block:: php
