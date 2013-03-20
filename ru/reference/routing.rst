@@ -106,8 +106,8 @@ to understand. The following placeholders are supported:
 Controller names are camelized, this means that characters (-) and (_) are removed and the next character
 is uppercased. For instance, some_controller is converted to SomeController.
 
-Since you can add many routes as you need using add(), the order in which you add the routes indicates
-their relevance, last routes added have more relevance than first added. Internally, all defined routes
+Since you can add many routes as you need using add(), the order in which routes are added indicate
+their relevance, lastest routes added have more relevance than first added. Internally, all defined routes
 are traversed in reverse order until :doc:`Phalcon\\Mvc\\Router <../api/Phalcon_Mvc_Router>` finds the
 one that matches the given URI and processes it, while ignoring the rest.
 
@@ -545,10 +545,9 @@ The following are examples of custom routes:
     ));
 
 .. highlights::
-
     Beware of characters allowed in regular expression for controllers and namespaces. As these
     become class names and in turn they're passed through the file system could be used by attackers to
-    read unauthorized files. A safe regular expression is: /([a-zA-Z0-9\_\-]+).
+    read unauthorized files. A safe regular expression is: /([a-zA-Z0-9\_\-]+)
 
 Default Behavior
 ----------------
