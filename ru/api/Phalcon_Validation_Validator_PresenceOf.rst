@@ -5,13 +5,24 @@ Class **Phalcon\\Validation\\Validator\\PresenceOf**
 
 *implements* :doc:`Phalcon\\Validation\\ValidatorInterface <Phalcon_Validation_ValidatorInterface>`
 
-Validates that a value is not null or empty string
+Validates that a value is not null or empty string  
+
+.. code-block:: php
+
+    <?php
+
+    use Phalcon\Validation\Validator\PresenceOf;
+    
+    $validator->add('name', new PresenceOf(array(
+       'message' => 'The name is required'
+    )));
+
 
 
 Methods
 ---------
 
-public *boolean*  **validate** (*Phalcon\\Validator* $validator, *string* $attribute)
+public *boolean*  **validate** (:doc:`Phalcon\\Validation <Phalcon_Validation>` $validator, *string* $attribute)
 
 Executes the validation
 
@@ -20,6 +31,12 @@ Executes the validation
 public  **__construct** ([*array* $options]) inherited from Phalcon\\Validation\\Validator
 
 Phalcon\\Validation\\Validator constructor
+
+
+
+public *mixed*  **isSetOption** (*string* $key) inherited from Phalcon\\Validation\\Validator
+
+Checks if an option is defined
 
 
 
