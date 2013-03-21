@@ -6,7 +6,7 @@ in the framework. It consists of an independent high-level abstraction layer for
 This component allows for a lower level database manipulation than using traditional models.
 
 .. highlights::
-    This guide is not intended to be a complete documentation of available methods and their arguments. Please visit the :doc:`API <../api/index>`
+This guide is not intended to be a complete documentation of available methods and their arguments. Please visit the :doc:`API <../api/index>`
     for a complete reference.
 
 Database Adapters
@@ -311,7 +311,7 @@ Database profiling is really easy With :doc:`Phalcon\\Db\\Profiler <../api/Phalc
 
     <?php
 
-    $eventsManager = new Phalcon\Events\Manager();
+    $eventsManager = new \Phalcon\Events\Manager();
 
     $profiler = new \Phalcon\Db\Profiler();
 
@@ -326,6 +326,9 @@ Database profiling is really easy With :doc:`Phalcon\\Db\\Profiler <../api/Phalc
             $profiler->stopProfile();
         }
     });
+
+    //Assign the events manager to the connection
+    $connection->setEventsManager($eventsManager);
 
     $sql = "SELECT buyer_name, quantity, product_name "
          . "FROM buyers "

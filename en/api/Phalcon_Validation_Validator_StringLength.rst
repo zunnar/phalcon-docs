@@ -25,7 +25,7 @@ Validates that a string has the specified maximum and minimum constraints
 Methods
 ---------
 
-public  **validate** (*Phalcon\\Validator* $validator, *string* $attribute)
+public *boolean*  **validate** (:doc:`Phalcon\\Validation <Phalcon_Validation>` $validator, *string* $attribute)
 
 Executes the validation
 
@@ -34,6 +34,12 @@ Executes the validation
 public  **__construct** ([*array* $options]) inherited from Phalcon\\Validation\\Validator
 
 Phalcon\\Validation\\Validator constructor
+
+
+
+public *mixed*  **isSetOption** (*string* $key) inherited from Phalcon\\Validation\\Validator
+
+Checks if an option is defined
 
 
 

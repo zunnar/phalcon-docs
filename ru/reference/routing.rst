@@ -106,8 +106,8 @@ to understand. The following placeholders are supported:
 Controller names are camelized, this means that characters (-) and (_) are removed and the next character
 is uppercased. For instance, some_controller is converted to SomeController.
 
-Since you can add many routes as you need using add(), the order in which you add the routes indicates
-their relevance, last routes added have more relevance than first added. Internally, all defined routes
+Since you can add many routes as you need using add(), the order in which routes are added indicate
+their relevance, lastest routes added have more relevance than first added. Internally, all defined routes
 are traversed in reverse order until :doc:`Phalcon\\Mvc\\Router <../api/Phalcon_Mvc_Router>` finds the
 one that matches the given URI and processes it, while ignoring the rest.
 
@@ -545,9 +545,9 @@ The following are examples of custom routes:
     ));
 
 .. highlights::
-	Beware of characters allowed in regular expression for controllers and namespaces. As these
-	become class names and in turn they're passed through the file system could be used by attackers to
-	read unauthorized files. A safe regular expression is: /([a-zA-Z0-9\_\-]+)
+    Beware of characters allowed in regular expression for controllers and namespaces. As these
+    become class names and in turn they're passed through the file system could be used by attackers to
+    read unauthorized files. A safe regular expression is: /([a-zA-Z0-9\_\-]+)
 
 Default Behavior
 ----------------
@@ -649,6 +649,26 @@ Or, you can modify specific routes to optionally accept trailing slashes:
             "action"     => "index"
         )
     );
+
+URI Sources
+-----------
+By default the URI information is obtained from the $_GET['_url'] variable, this is passed by the Rewrite-Engine to 
+Phalcon, you can also use $_SERVER['REQUEST_URI'] if required:
+
+.. code-block:: php
+
+    <?php
+
+    $router->setUriSource(Router::URI_SOURCE_GET_URL); // use $_GET['_url'] (default)
+    $router->setUriSource(Router::URI_SOURCE_SERVER_REQUEST_URI); // use $_SERVER['REQUEST_URI'] (default)
+
+Or you can manually pass a URI to the 'handle' method:
+
+.. code-block:: php
+
+    <?php
+
+    $router->handle('/some/route/to/handle');
 
 Testing your routes
 -------------------
