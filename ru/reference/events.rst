@@ -1,5 +1,5 @@
-Менеджер событий
-================
+Менеджер событий EventsManager
+==============================
 Цель данного компонента состоит в добавлени возможности перехватывать процесс выполнения большинства компонентов системы путём создания
 специальных "ключевых точек". Это ключевые точки позволяют разработчику получить информацию о состсоянии, манипулировать данными и изменять 
 пройесс работы компонента.
@@ -64,6 +64,9 @@
 In order to log all the SQL statements executed by our application, we need to use the event “afterQuery”. The first parameter passed to
 the event listener contains contextual information about the event that is running, the second is the connection itself.
 
+Для того, чтобы получать все SQL-запросы, выполненные в нашем приложении, мы должны использовать событие “afterQuery”. Первый передаваемый слушателю параметр
+содержит контекстную информацию о текущем событии, второй параметр - само соединение.
+
 .. code-block:: php
 
     <?php
@@ -85,7 +88,7 @@ the event listener contains contextual information about the event that is runni
 
     }
 
-As part of this example, we will also implement the Phalcon\\Db\\Profiler to detect the SQL statements that are taking longer to execute than expected:
+В рамках этого примера, мы будем также использовать профайлер Phalcon\\Db\\Profiler для обнаружения SQL-запросов с длительным временем выполнения:
 
 .. code-block:: php
 
@@ -122,14 +125,14 @@ As part of this example, we will also implement the Phalcon\\Db\\Profiler to det
 
     }
 
-The resulting profile data can be obtained from the listener:
+Результирующие данные о работе профайлера могут быть получены из слушателя:
 
 .. code-block:: php
 
     <?php
 
-    //Send a SQL command to the database server
-    $connection->query("SELECT * FROM products p WHERE p.status = 1");
+    // Выполнение SQL запроса
+    $connection->execute("SELECT * FROM products p WHERE p.status = 1");
 
     foreach($dbListener->getProfiler()->getProfiles() as $profile){
         echo "SQL Statement: ", $profile->getSQLStatement(), "\n";
@@ -138,13 +141,13 @@ The resulting profile data can be obtained from the listener:
         echo "Total Elapsed Time: ", $profile->getTotalElapsedSeconds(), "\n";
     }
 
-In a similar manner we can register an lambda function to perform the task instead of a separate listener class (as seen above):
+Подобным образом мы можем зарегистрировать лямбда-функцию для выполнения этой задачи, без использования отдельного класса слушателя (как в примере выше):
 
 .. code-block:: php
 
     <?php
 
-    //Listen all the database events
+    // Слушаем все события базы данных
     $eventManager->attach('db', function($event, $connection) {
         if ($event->getType() == 'afterQuery') {
             echo $connection->getSQLStatement();
@@ -153,9 +156,9 @@ In a similar manner we can register an lambda function to perform the task inste
 
 Создание компонентов с поддержкой событий
 -----------------------------------------
-You can create components in your application that trigger events to an EventsManager. As a consequence, there may exist listeners
-that react to these events when generated. In the following example we're creating a component called "MyComponent".
-This component is EventsManager aware; when its method "someTask" is executed it triggers two events to any listener in the EventsManager:
+Компоненты, созданные в вашем приложении могут инициироварь события в EventsManager. Вы также можете создавать слушателей, которые
+реагируют на эти события. В следующем примере мы создаем компонент, под названием "MyComponent".
+Этот компонент будет указывать менеджеру событий о выполнении своего метода "someTask", что в свою очередь будет вызывать два события для слушателей в EventsManager:
 
 .. code-block:: php
 
@@ -180,7 +183,7 @@ This component is EventsManager aware; when its method "someTask" is executed it
         {
             $this->_eventsManager->fire("my-component:beforeSomeTask", $this);
 
-            // do some task
+            // тут выпполнение каких-либо действий
 
             $this->_eventsManager->fire("my-component:afterSomeTask", $this);
         }
@@ -191,6 +194,10 @@ Note that events produced by this component are prefixed with "my-component". Th
 identify events that are generated from certain component. You can even generate events outside the component with
 the same name. Now let's create a listener to this component:
 
+Обратите внимание, что события, создаваемые нашим компонентом имеют префикс "my-component". Это уникальное слово для разделения событий,
+которые формируются из разных компонентах. Вы можете создавать события вне компонента с таким же именем, оно ни от чего не зависит.
+Теперь давайте создадим слушателя до нашего компонента:
+
 .. code-block:: php
 
     <?php
@@ -200,45 +207,45 @@ the same name. Now let's create a listener to this component:
 
         public function beforeSomeTask($event, $myComponent)
         {
-            echo "Here, beforeSomeTask\n";
+            echo "Выполняется beforeSomeTask\n";
         }
 
         public function afterSomeTask($event, $myComponent)
         {
-            echo "Here, afterSomeTask\n";
+            echo "Выполняется afterSomeTask\n";
         }
 
     }
 
-A listener is simply a class that implements any of all the events triggered by the component. Now let's make everything work together:
+Слушатель - это просто класс, который реализует все события, вызываемые в компоненте. Давайте заставим их работать вместе:
 
 .. code-block:: php
 
     <?php
 
-    //Create an Events Manager
+    // Создаём менеджер событий
     $eventsManager = new Phalcon\Events\Manager();
 
-    //Create the MyComponent instance
+    // Создаём экземпляр MyComponent
     $myComponent = new MyComponent();
 
-    //Bind the eventsManager to the instance
+    // Связываем компонент и менеджер событий
     $myComponent->setEventsManager($myComponent);
 
-    //Attach the listener to the EventsManager
+    // Связываем слушателя и менеджер событий
     $eventsManager->attach('my-component', new SomeListener());
 
-    //Execute methods in the component
+    // Выполняем метод нашего компонента
     $myComponent->someTask();
 
-As "someTask" is executed, the two methods in the listener will be executed, producing the following output:
+Когда метод "someTask" выполнится, сработают оба метода слушателя, и выведутся следующие строки:
 
 .. code-block:: php
 
-    Here, beforeSomeTask
-    Here, afterSomeTask
+    Выполняется beforeSomeTask
+    Выполняется afterSomeTask
 
-Additional data may also passed when triggering an event using the third parameter of "fire":
+Во время наступления события в слушателей можно передавать дополнительные данные, они должны передаваться третим параметром в метод "fire":
 
 .. code-block:: php
 
@@ -246,38 +253,38 @@ Additional data may also passed when triggering an event using the third paramet
 
     $eventsManager->fire("my-component:afterSomeTask", $this, $extraData);
 
-In a listener the third parameter also receives this data:
+Слушатель также получает эти данные третим параметром:
 
 .. code-block:: php
 
     <?php
 
-    //Receiving the data in the third parameter
+    // Получение данных из третьего параметра
     $eventManager->attach('my-component', function($event, $component, $data) {
         print_r($data);
     });
 
-    //Receiving the data from the event context
+    // Получение данных из контекста события
     $eventManager->attach('my-component', function($event, $component) {
         print_r($event->getData());
     });
 
-If a listener it is only interested in listening a specific type of event you can attach a listener directly:
+Если слушать необходимо только определённое событие, вы можете указать его в момент связывания:
 
 .. code-block:: php
 
     <?php
 
-    //The handler will only be executed if the event triggered is "beforeSomeTask"
+    // Обработчик выполнится только при наступлении события "beforeSomeTask"
     $eventManager->attach('my-component:beforeSomeTask', function($event, $component) {
         //...
     });
 
-Event Propagation/Cancelation
+Остановка/Продолжение событий
 -----------------------------
-Many listeners may be added to the same event manager, this means that for the same type of event many listeners can be notified.
-The listeners are notified in the order they were registered in the EventsManager. Some events are cancelable, indicating that
-these may be stopped preventing other listeners are notified about the event:
+Несколько слушатетей может быть привязано к одному событию, это означает, что при его наступлении эти слушатели будут уведомлены.
+Слушатели уведомляются в порядке, в котором они были зарегистрированы в менеджере событий EventsManager. Некоторые события могут быть прекращены
+во время работы слушателя и уведомление других слушателей будет остановлено.
 
 .. code-block:: php
 
@@ -285,9 +292,9 @@ these may be stopped preventing other listeners are notified about the event:
 
     $eventsManager->attach('db', function($event, $connection){
 
-        //We stop the event if it is cancelable
+        // Если событие поддерживает прекращение
         if ($event->isCancelable()) {
-            //Stop the event, so other listeners will not be notified about this
+            // Прекращение события, остальные слушатели его не получат
             $event->stop();
         }
 
@@ -295,8 +302,8 @@ these may be stopped preventing other listeners are notified about the event:
 
     });
 
-By default events are cancelable, even most of events produced by the framework are cancelables. You can fire a not-cancelable event
-by passing "false" in the fourth parameter of fire:
+По умолчанию все события поддерживают прекращение, большинство событий, выполняемых в ядре фреймворка, тоже поддерживают прекращение. Вы можете
+указать что событие не прекращаемое передавая "false" в четвертый параметр вызова fire:
 
 .. code-block:: php
 
