@@ -288,6 +288,47 @@ Phalcon предоставляет класс :doc:`Phalcon\\Cache <cache>`, д�
         $cache->save($cacheKey, $robots, $lifetime);
     }
 
+Multi-Level Cache
+-----------------
+This feature ​of the cache component, ​allows ​the developer to implement a multi-level cache​. This new feature is very ​useful 
+because you can save the same data in several cache​ locations​ with different lifetimes, reading ​first from the one with 
+the faster adapter and ending with the slowest one until the data expire​s​:
+
+.. code-block:: php
+
+    <?php
+
+    $ultraFastFrontend = new Phalcon\Cache\Frontend\Data(array(
+        "lifetime" => 3600
+    ));
+
+    $fastFrontend = new Phalcon\Cache\Frontend\Data(array(
+        "lifetime" => 86400
+    ));
+
+    $slowFrontend = new Phalcon\Cache\Frontend\Data(array(
+        "lifetime" => 604800
+    ));
+
+    //Backends are registered from the fastest to the slower
+    $cache = new \Phalcon\Cache\Multiple(array(
+        new Phalcon\Cache\Backend\Apc($ultraFastFrontend, array(
+            "prefix" => 'cache',
+        )),
+        new Phalcon\Cache\Backend\Memcache($fastFrontend, array(
+            "prefix" => 'cache',
+            "host" => "localhost",
+            "port" => "11211"
+        )),
+        new Phalcon\Cache\Backend\File($slowFrontend, array(
+            "prefix" => 'cache',
+            "cacheDir" => "../app/cache/"
+        ))
+    ));
+
+    //Save, saves in every backend
+    $cache->save('my-key', $data);
+
 Frontend Адаптеры
 -----------------
 Доступные адаптеры приведены в таблице:
