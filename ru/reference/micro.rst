@@ -377,19 +377,23 @@ In addition to the events manager, events can be added using the methods 'before
     $app = new Phalcon\Mvc\Micro();
 
     //Executed before every route executed
+    //Return false cancels the route execution
     $app->before(function() use ($app) {
         if ($app['session']->get('auth') == false) {
-
-            $app['flashSession']->error("The user isn't authenticated");
-            $app['response']->redirect("/error");
-
-            //Return false stops the normal execution
             return false;
         }
+        return true;
+    });
+
+    $app->map('/api/robots', function(){
+        return array(
+            'status' => 'OK'
+        );
     });
 
     $app->after(function() use ($app) {
         //This is executed after the route is executed
+        echo json_encode($app->getReturnedValue());
     });
 
     $app->finish(function() use ($app) {
