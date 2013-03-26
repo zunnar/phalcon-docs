@@ -63,7 +63,7 @@
 	{
 
 		/**
-		 * Executes the validation
+		 * Выполненение валидации
 		 *
 		 * @param Phalcon\Validation $validator
 		 * @param string $attribute
@@ -77,7 +77,7 @@
 
 				$message = $this->getOption('message');
 				if (!$message) {
-					$message = 'The IP is not valid';
+					$message = 'IP адресс не правилен';
 				}
 
 				$validator->appendMessage(new Message($message, $attribute, 'Ip'));
@@ -90,14 +90,14 @@
 
 	}
 
-Validation Messages
+Сообщения валидации
 -------------------
-:doc:`Phalcon\\Validation <../api/Phalcon_Validation>` has a messaging subsystem that provides a flexible way to output or store the
-validation messages generated during the validation processes.
+Компонент :doc:`Phalcon\\Validation <../api/Phalcon_Validation>` имеет внутреннюю подсистему работы с сообщениями.
+Она обеспечивает гибкую работу с хранением и выводом проверочных сообщений, генерируемых в ходе проверки.
 
-Each message consists of an instance of the class :doc:`Phalcon\\Validation\\Message <../api/Phalcon_Mvc_Model_Message>`. The set of
-messages generated can be retrieved with the method getMessages(). Each message provides extended information like the attribute that
-generated the message or the message type:
+Каждое сообщение состоит из экземпляра класса :doc:`Phalcon\\Validation\\Message <../api/Phalcon_Mvc_Model_Message>`. Набор
+сгенерированных сообщений может быть получен с помощью метода getMessages(). Каждое сообщение содержит расширенную информацию - атрибут,
+текст и тип сообщения:
 
 .. code-block:: php
 
@@ -106,14 +106,15 @@ generated the message or the message type:
     $messages = $validation->validate();
     if (count($messages)) {
         foreach ($validation->getMessages() as $message) {
-            echo "Message: ", $message->getMessage(), "\n";
-            echo "Field: ", $message->getField(), "\n";
-            echo "Type: ", $message->getType(), "\n";
+            echo "Сообщение: ", $message->getMessage(), "\n";
+            echo "Поле: ", $message->getField(), "\n";
+            echo "Тип: ", $message->getType(), "\n";
         }
     }
 
 
-The method getMessages() can be overriden in a validation class to replace/translate the default messages generated automatically by the validators:
+Метод getMessages() может быть переопределен в наследуещем классе для замены/перевода текста сообщения по умолчанию,
+это особенно актуально для автоматически создаваемых валидаторов:
 
 .. code-block:: php
 
@@ -127,7 +128,7 @@ The method getMessages() can be overriden in a validation class to replace/trans
             foreach (parent::getMessages() as $message) {
                 switch ($message->getType()) {                    
                     case 'PresenceOf':
-                        $messages[] = 'The field ' . $message->getField() . ' is mandatory';
+                        $messages[] = 'Заполнение поля ' . $message->getField() . ' обязательно';
                         break;
                 }
             }
@@ -135,12 +136,12 @@ The method getMessages() can be overriden in a validation class to replace/trans
         }
     }
 
-Or you can pass a parameter 'message' to change the default message in each validator:
+Или вы можете передать сообщение параметром по умолчанию в каждый валидатор:
 
 .. code-block:: php
 
 	$validation->add('email', new Phalcon\Validation\Validator\Email(
-		'message' => 'The e-mail is not valid'
+		'message' => 'Адресс e-mail введён не верно'
 	));
 
 
