@@ -212,7 +212,7 @@ by this way the "url" service can produce the corresponding URL:
 
     })->setName('show-post');
 
-    //produce a url somewhere
+    //produce an URL somewhere
     $app->get('/', function() use ($app) {
 
         echo '<a href="', $app->url->get(array(
@@ -279,7 +279,7 @@ The array-syntax is allowed to easily set/get services in the internal services 
 
 Not-Found Handler
 -----------------
-When a user tries to access a route that is not defined, the micro application will try to execute the "Not-Found" handler.
+When an user tries to access a route that is not defined, the micro application will try to execute the "Not-Found" handler.
 An example of that behavior is below:
 
 .. code-block:: php
