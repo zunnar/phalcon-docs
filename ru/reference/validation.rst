@@ -7,6 +7,8 @@
 
 .. code-block:: php
 
+    	<?php
+
 	use Phalcon\Validation\Validator\PresenceOf,
 		Phalcon\Validation\Validator\Email;
 
@@ -54,6 +56,8 @@
 Дополнительные проверки могут быть реализованы самостоятельно. Следующий класс, объясняет, как создать правило валидации для этого компонента:
 
 .. code-block:: php
+
+    	<?php
 
 	use Phalcon\Validation\Validator,
 		Phalcon\Validation\ValidatorInterface,
