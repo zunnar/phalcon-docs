@@ -202,7 +202,7 @@ Phalcon предоставляет ряд помощников для созда
 ---------------------------
 Работать с выпадающими списками легко при хранении данных для их формирования в виде ассоциативных массивов PHP. У Phalcon имеется два помощника
 для работы с такими списками - Phalcon\\Tag::select() и Phalcon\\Tag::selectStatic(). Метод Phalcon\\Tag::select() был специально разработан для
-работы с :doc:`Phalcon\\Mvc\\Model <models>`, а Phalcon\\Tag::selectStatic() с PHP массивы.
+работы с :doc:`Phalcon\\Mvc\\Model <models>`, а Phalcon\\Tag::selectStatic() с PHP массивами.
 
 .. code-block:: php
 
