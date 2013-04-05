@@ -7,8 +7,6 @@
 
 .. code-block:: php
 
-    	<?php
-
 	use Phalcon\Validation\Validator\PresenceOf,
 		Phalcon\Validation\Validator\Email;
 
@@ -29,7 +27,7 @@
 	$messages = $validation->validate($_POST);
 	if (count($messages)) {
 		foreach ($messages as $message) {
-			echo $message, '<br>;
+			echo $message, '<br>';
 		}
 	}
 
