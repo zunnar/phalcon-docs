@@ -1,22 +1,22 @@
-Routing
-=======
-The router component allows defining routes that are mapped to controllers or handlers that should receive
-the request. A router simply parses a URI to determine this information. The router has two modes: MVC
-mode and match-only mode. The first mode is ideal for working with MVC applications.
+Роутинг (Routing, Маршрутизация)
+================================
+Компонент маршрутизации позволяет определять маршруты, которые будут привязаны к контроллерам, или обработчикам для получения
+запроса. Маршрутизатор просто разбирает URI для определения информации. Маршрутизатор имеет два режима: MVC
+режим и режим совпадения. Первый режим идеально подходит для работы с MVC приложениями.
 
-Defining Routes
----------------
-:doc:`Phalcon\\Mvc\\Router <../api/Phalcon_Mvc_Router>` provides advanced routing capabilities. In MVC mode,
-you can define routes and map them to controllers/actions that you require. A route is defined as follows:
+Определение маршрутов
+---------------------
+:doc:`Phalcon\\Mvc\\Router <../api/Phalcon_Mvc_Router>` предоставляет расширенные возможности маршрутизации. В MVC режиме вы
+можете определить маршруты и направить их на контроллеры/действия, которые вам требуются. Маршруты определяются следующим образом:
 
 .. code-block:: php
 
     <?php
 
-    // Create the router
+    // Создание маршрутизатора
     $router = new \Phalcon\Mvc\Router();
 
-    //Define a route
+    // Определение правила маршрутизации
     $router->add(
         "/admin/users/my-profile",
         array(
@@ -25,7 +25,7 @@ you can define routes and map them to controllers/actions that you require. A ro
         )
     );
 
-    //Another route
+    // Еще одно правило
     $router->add(
         "/admin/users/change-password",
         array(

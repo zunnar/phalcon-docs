@@ -1,11 +1,13 @@
-Logging
-=======
-:doc:`Phalcon\\Logger <../api/Phalcon_Logger>` is a component whose purpose is to provide logging services for applications. It offers logging to different backends using different adapters. It also offers transaction logging, configuration options, different formats and filters. You can use the :doc:`Phalcon\\Logger <../api/Phalcon_Logger>` for every logging need your application has, from debugging processes to tracing application flow.
+Логирование
+===========
+:doc:`Phalcon\\Logger <../api/Phalcon_Logger>` является компонентом для обеспечиния ведения логов в приложении. Он позволяет
+вести разных типов с использованием различных адаптеров. Он также предлагает регистрацию транзакций, параметров конфигурации, различных форматов и фильтров.
+Вы можете использовать :doc:`Phalcon\\Recorder <../api/Phalcon_Logger>` для логирования всех операция, отладки процессов и отслеживания работы приложения.
 
-Adapters
+Адаптеры
 --------
-This component makes use of adapters to store the logged messages. The use of adapters allows for a common interface for logging
-while switching backends if necessary. The adapters supported are:
+Этот компонент позволяет использовать адаптеры для хранения журнала сообщений. Использование адаптеров обеспечивает общий интерфейс для регистрации
+время переключения интерфейсов при необходимости. Реализованные адаптеры:
 
 +---------+---------------------------+--------------------------------------------------------------------------------+
 | Adapter | Description               | API                                                                            |
