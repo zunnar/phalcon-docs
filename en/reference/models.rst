@@ -58,26 +58,6 @@ you can use the getSource() method:
 The model Robots now maps to "the_robots" table. The initialize() method aids in setting up the model with a custom behavior i.e. a different table.
 The initialize() method is only called once during the request.
 
-Models in Namespaces
---------------------
-Namespaces can be used to avoid class name collision. In this case it is necessary to indicate the name of the related table using getSource:
-
-.. code-block:: php
-
-    <?php
-
-    namespace Store\Toys;
-
-    class Robots extends \Phalcon\Mvc\Model
-    {
-
-        public function getSource()
-        {
-            return "robots";
-        }
-
-    }
-
 Understanding Records To Objects
 --------------------------------
 Every instance of a model represents a row in the table. You can easily access record data by reading object properties. For example,
@@ -410,6 +390,23 @@ Since the default bind-type is \\Phalcon\\Db\\Column::BIND_TYPE_STR, there is no
 
 Bound parameters are available for all query methods such as find() and findFirst() but also the calculation
 methods like count(), sum(), average() etc.
+
+Magic Finders
+-------------
+Phalcon\Mvc\Model provides magic finders to find rows simplifing the coding:
+
+.. code-block:: php
+
+    <?php
+
+    // findFirst("id = 1");
+    $robot = Robots::findFirstById(1);
+
+    // find("type = 'virtual'")
+    $robots = Robots::findByType('virtual');
+
+    // count("type = 'virtual'")
+    $robots = Robots::countByType('virtual');
 
 Relationships between Models
 ----------------------------
@@ -1062,7 +1059,7 @@ the mass assignment:
     <?php
 
     $robot = new Robots();
-    $robot->save($_POST, array('name', 'type'));    
+    $robot->save($_POST, array('name', 'type'));
 
 Create/Update with Confidence
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1333,13 +1330,16 @@ this means we can create listeners that run when an event is triggered.
 
     <?php
 
-    class Robots extends Phalcon\Mvc\Model
+    use Phalcon\Mvc\Model,
+        Phalcon\Events\Manager as EventsManager;
+
+    class Robots extends Model
     {
 
         public function initialize()
         {
 
-            $eventsManager = new \Phalcon\Events\Manager();
+            $eventsManager = new EventsManager();
 
             //Attach an anonymous function as a listener for "model" events
             $eventsManager->attach('model', function($event, $robot) {
@@ -1367,19 +1367,22 @@ If we want all objects created in our application use the same EventsManager, th
 
     <?php
 
-    //Registering the modelsManager service
-    $di->setShared('modelsManager', function() {
+    use Phalcon\Events\Manager as EventsManager,
+        Phalcon\Mvc\Models\Manager as ModelsManager;
 
-        $eventsManager = new \Phalcon\Events\Manager();
+    //Registering the modelsManager service
+    $di->set('modelsManager', function() {
+
+        $eventsManager = new EventsManager();
 
         //Attach an anonymous function as a listener for "model" events
-        $eventsManager->attach('model', function($event, $model){
+        $eventsManager->attach('model', function($event, $model) {
 
             //Catch events produced by the Robots model
             if (get_class($model) == 'Robots') {
 
                 if ($event->getType() == 'beforeSave') {
-                    if ($modle->name == 'Scooby Doo') {
+                    if ($model->name == 'Scooby Doo') {
                         echo "Scooby Doo isn't a robot!";
                         return false;
                     }
@@ -1390,10 +1393,11 @@ If we want all objects created in our application use the same EventsManager, th
         });
 
         //Setting a default EventsManager
-        $modelsManager = new Phalcon\Mvc\Models\Manager();
+        $modelsManager = new ModelsManager();
         $modelsManager->setEventsManager($eventsManager);
         return $modelsManager;
-    });
+
+    }, true);
 
 If a listener returns false that will stop the operation that is executing currently.
 
@@ -1683,7 +1687,7 @@ A callback also can be used to create a conditional assigment of automatic defau
 .. highlights::
 
     Never use a \\Phalcon\\Db\\RawValue to assign external data (such as user input)
-    or variable data. The value of these fields is ignored when binding parameters to the query.
+    or variable data. The values of these fields are ignored when binding parameters to the query.
     So it could be used to attack the application injecting SQL.
 
 Dynamic Update
@@ -1884,9 +1888,10 @@ This behavior can be used in the following way:
 
     <?php
 
-    use Phalcon\Mvc\Model\Behavior\SoftDelete;
+    use Phalcon\Mvc\Model,
+        Phalcon\Mvc\Model\Behavior\SoftDelete;
 
-    class Users extends \Phalcon\Mvc\Model
+    class Users extends Model
     {
 
         const DELETED = 'D';
@@ -2089,7 +2094,9 @@ is successfully or not:
 
     <?php
 
-    class RobotsController extends Phalcon\Mvc\Controller
+    use Phalcon\Mvc\Controller;
+
+    class RobotsController extends Controllers
     {
         public function saveAction()
         {
@@ -2125,15 +2132,20 @@ implicitly creates a transaction to ensure that data are correctly stored:
 
     <?php
 
+    //Create the parts
     $robotPart = new RobotParts();
     $robotPart->type = "head";
 
+    //Create the robot
     $robot = new Robots();
     $robot->name = "WALL·E";
     $robot->created_at = date("Y-m-d");
+
+    //Assign the $robotPart instance to a virtual property named as the relation
     $robot->robotPart = $robotPart;
 
-    $robot->save(); //Creates an implicit transaction to store both records
+    //Creates an implicit transaction to store both records
+    $robot->save();
 
 Isolated Transactions
 ^^^^^^^^^^^^^^^^^^^^^
@@ -2176,7 +2188,7 @@ transaction created ensuring that it's correctly rollbacked/commited before endi
         //Everything goes fine, let's commit the transaction
         $transaction->commit();
 
-    } catch(TxFailed $e) {
+    } catch (TxFailed $e) {
         echo "Failed, reason: ", $e->getMessage();
     }
 
@@ -2197,10 +2209,13 @@ Transactions can be used to delete many records in a consistent way:
         //Request a transaction
         $transaction = $manager->get();
 
-        //Get the robots will be deleted
+        //Get the robots that must be deleted
         foreach (Robots::find("type = 'mechanical'") as $robot) {
+
             $robot->setTransaction($transaction);
+
             if ($robot->delete() == false) {
+
                 //Something goes wrong, we should to rollback the transaction
                 foreach ($robot->getMessages() as $message) {
                     $transaction->rollback($message->getMessage());
@@ -2213,7 +2228,7 @@ Transactions can be used to delete many records in a consistent way:
 
         echo "Robots were deleted successfully!";
 
-    } catch(TxFailed $e) {
+    } catch (TxFailed $e) {
         echo "Failed, reason: ", $e->getMessage();
     }
 
@@ -2224,9 +2239,9 @@ is performed. You can use the service container to create an overall transaction
 
     <?php
 
-    $di->setShared('transactions', function(){
+    $di->set('transactions', function(){
         return new \Phalcon\Mvc\Model\Transaction\Manager();
-    });
+    }, true);
 
 Then access it from a controller or view:
 
@@ -2254,7 +2269,92 @@ Then access it from a controller or view:
 
     }
 
-While a transaction is active, the transaction manager will always return the same transaction across the application.
+While a transaction is active, the transaction manager always return the same transaction across the application.
+
+Boolean Statuses vs. Exceptions
+-------------------------------
+As seen before, the saving process (inserting/updating) returns a boolean value indicating if the process was successful
+or it failed. This design gives you more control and flexibility when a model cannot be saved:
+
+.. code-block:: php
+
+    <?php
+
+    use Phalcon\Mvc\Model\Transaction\Failed as TxFailed;
+
+    try {
+
+        $transaction = $this->transactions->get();
+
+        $product = new Products();
+        $product->setTransaction($transaction);
+        $product->name = $name;
+
+        //Save the product
+        $success = $product->save();
+
+        if (!$success) {
+            $transaction->rollback('Save product failed: ' . $product->getMessages()[0]);
+        }
+
+        foreach ($productStocks as $stock) {
+
+            $productStock = new ProductStocks();
+            $productStock->setTransaction($transaction);
+
+            $productStock->productId = $product->id;
+            $productStock->stock = $stock;
+
+            $success = $productStock->save();
+            if (!$success) {
+                $transaction->rollback('Save product stock failed: ' .
+                    $productStock->getMessages()[0]);
+            }
+        }
+
+    } catch (TxFailed $e) {
+        echo "Failed, reason: ", $e->getMessage();
+    }
+
+By setting 'exceptionOnFailedSave' to boolean true in the ORM global options, you can change this behavior, to throw
+an exception when the validation fails:
+
+.. code-block:: php
+
+    <?php
+
+    use Phalcon\Mvc\Model\ValidationException;
+
+    try {
+
+        $this->db->begin();
+
+        $product = new Products();
+        $product->name = $name;
+
+        //Save the product
+        $product->save();
+
+        foreach ($stocks as $stock) {
+
+            $productStock = new ProductStocks();
+
+            $productStock->productId = $product->id;
+            $productStock->stock = $stock;
+
+            //Save the product stock
+            $productStock->save();
+        }
+
+        $this->db->commit();
+
+    } catch (ValidationException $e) {
+
+        //Rollback the transaction
+        $this->db->rollback();
+
+        echo 'Save failed, reason:', $e->getMessage();
+    }
 
 Independent Column Mapping
 --------------------------
@@ -2371,11 +2471,10 @@ you can do this:
             return false;
         }
         return true;
-    }
+    });
 
 Deleting related records
 ^^^^^^^^^^^^^^^^^^^^^^^^
-
 Instead of doing this:
 
 .. code-block:: php
@@ -2406,7 +2505,7 @@ you can do this:
     <?php
 
     //Delete only whose stock is greater or equal than zero
-    $robots->getParts()->delete(function($part) {
+    $robots->getParts()->delete(function ($part) {
         if ($part->stock < 0) {
             return false;
         }
@@ -2447,8 +2546,6 @@ In models that have this feature activated you can check what fields changed:
     var_dump($robot->getChangedFields()); // ['name']
     var_dump($robot->hasChanged('name')); // true
     var_dump($robot->hasChanged('type')); // false
-
-
 
 Models Meta-Data
 ----------------
@@ -2831,7 +2928,7 @@ query executed:
 
     $robot = Robots::findFirst('id = 101');
 
-
+With this structure you can easily implement horizontal sharding in your applications.
 
 Logging Low-Level SQL Statements
 --------------------------------
@@ -2845,11 +2942,15 @@ statements as they happen.
 
     <?php
 
+    use Phalcon\Logger\Adapter\File as FileLogger,
+        Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter,
+        Phalcon\Events\Manager as EventsManager;
+
     $di->set('db', function() {
 
-        $eventsManager = new \Phalcon\Events\Manager();
+        $eventsManager = new EventsManager();
 
-        $logger = new \Phalcon\Logger\Adapter\File("app/logs/debug.log");
+        $logger = new FileLogger("app/logs/debug.log");
 
         //Listen all the database events
         $eventsManager->attach('db', function($event, $connection) use ($logger) {
@@ -2858,7 +2959,7 @@ statements as they happen.
             }
         });
 
-        $connection = new \Phalcon\Db\Adapter\Pdo\Mysql(array(
+        $connection = new DbAdapter(array(
             "host" => "localhost",
             "username" => "root",
             "password" => "secret",
@@ -2901,13 +3002,17 @@ this you can diagnose performance problems and to discover bottlenecks.
 
     <?php
 
+    use Phalcon\Events\Manager as EventsManager,
+        Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter,
+        Phalcon\Db\Profiler;
+
     $di->set('profiler', function(){
-        return new \Phalcon\Db\Profiler();
+        return new Profiler();
     }, true);
 
     $di->set('db', function() use ($di) {
 
-        $eventsManager = new \Phalcon\Events\Manager();
+        $eventsManager = new EventsManager();
 
         //Get a shared instance of the DbProfiler
         $profiler = $di->getProfiler();
@@ -2922,7 +3027,7 @@ this you can diagnose performance problems and to discover bottlenecks.
             }
         });
 
-        $connection = new \Phalcon\Db\Adapter\Pdo\Mysql(array(
+        $connection = new DbAdapter(array(
             "host" => "localhost",
             "username" => "root",
             "password" => "secret",
@@ -2947,7 +3052,7 @@ Profiling some queries:
     Robots::find(array("limit" => 30);
 
     //Get the generated profiles from the profiler
-    $profiles = $di->get('profiler')->getProfiles();
+    $profiles = $di->getProfiler()->getProfiles();
 
     foreach ($profiles as $profile) {
        echo "SQL Statement: ", $profile->getSQLStatement(), "\n";
@@ -2957,6 +3062,8 @@ Profiling some queries:
     }
 
 Each generated profile contains the duration in miliseconds that each instruction takes to complete as well as the generated SQL statement.
+
+Check out the :doc:`events <events>` chapter for more information about the events manager and listeners.
 
 Injecting services into Models
 ------------------------------
@@ -3001,17 +3108,19 @@ According to how you use the ORM you can disable that you aren't using. These op
 
 The available options are:
 
-+---------------------+----------------------------------------------------------------------------------+
-| Option              | Description                                                                      |
-+=====================+==================================================================================+
-| events              | Enables/Disables callbacks, hooks and event notifications from all the models    |
-+---------------------+----------------------------------------------------------------------------------+
-| columnRenaming      | Enables/Disables the column renaming                                             |
-+---------------------+----------------------------------------------------------------------------------+
-| notNullValidations  | The ORM automatically validate the not null columns present in the mapped table  |
-+---------------------+----------------------------------------------------------------------------------+
-| virtualForeignKeys  | Enables/Disables the virtual foreign keys                                        |
-+---------------------+----------------------------------------------------------------------------------+
++-----------------------+------------------------------------------------------------------------------------------------+
+| Option                | Description                                                                                    |
++=======================+================================================================================================+
+| events                | Enables/Disables callbacks, hooks and event notifications from all the models                  |
++-----------------------+------------------------------------------------------------------------------------------------+
+| columnRenaming        | Enables/Disables the column renaming                                                           |
++-----------------------+------------------------------------------------------------------------------------------------+
+| notNullValidations    | The ORM automatically validate the not null columns present in the mapped table                |
++-----------------------+------------------------------------------------------------------------------------------------+
+| virtualForeignKeys    | Enables/Disables the virtual foreign keys                                                      |
++-----------------------+------------------------------------------------------------------------------------------------+
+| exceptionOnFailedSave | Enables/Disables throws an exception when the saving process fails instead of return a boolean |
++-----------------------+------------------------------------------------------------------------------------------------+
 
 Stand-Alone component
 ---------------------
@@ -3021,18 +3130,28 @@ Using :doc:`Phalcon\\Mvc\\Model <models>` in a stand-alone mode can be demonstra
 
     <?php
 
+    use Phalcon\Mvc\Model\Manager as ModelsManager,
+        Phalcon\Mvc\Model\Metadata\Memory as MemoryMetaData,
+        Phalcon\Db\Adapter\Pdo\Sqlite as DbAdapter;
+
     $di = new Phalcon\DI();
 
     //Setup a connection
-    $di->set('db', new \Phalcon\Db\Adapter\Pdo\Sqlite(array(
+    $di->set('db', new DbAdapter(array(
         "dbname" => "sample.db"
     )));
 
     //Set a models manager
-    $di->set('modelsManager', new \Phalcon\Mvc\Model\Manager());
+    $di->set('modelsManager', new ModelsManager());
 
-    //Use the memory meta-data adapter or other
-    $di->set('modelsMetadata', new \Phalcon\Mvc\Model\Metadata\Memory());
+    //Use the memory meta-data adapter or another
+    $di->set('modelsMetadata', new MemoryMetaData());
+
+Models can be used as usual:
+
+.. code-block:: php
+
+    <?php
 
     class Robots extends Phalcon\Mvc\Model
     {
