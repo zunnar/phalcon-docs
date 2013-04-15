@@ -96,9 +96,9 @@ API класса Locale.
     $collator->setStrength(Collator::DEFAULT);
     var_dump($collator->compare("una canción", "una cancion"));
 
-Transliteration
----------------
-Transliterator_ provides transliteration of strings:
+Транслитерация
+--------------
+Компонент Transliterator_ добавляет возможность транслитерации строк:
 
 .. code-block:: php
 

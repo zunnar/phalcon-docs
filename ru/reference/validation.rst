@@ -7,6 +7,8 @@
 
 .. code-block:: php
 
+    	<?php
+
 	use Phalcon\Validation\Validator\PresenceOf,
 		Phalcon\Validation\Validator\Email;
 
