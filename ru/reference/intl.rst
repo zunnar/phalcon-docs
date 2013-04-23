@@ -93,7 +93,7 @@ API класса Locale.
     var_dump($collator->compare("una canción", "una cancion"));
 
     // Результат сравнения будет отрицательный
-    $collator->setStrength(Collator::DEFAULT);
+    $collator->setStrength(Collator::DEFAULT_VALUE);
     var_dump($collator->compare("una canción", "una cancion"));
 
 Транслитерация
