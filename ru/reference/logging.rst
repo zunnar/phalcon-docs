@@ -41,10 +41,7 @@
     [Tue, 17 Apr 12 22:09:02 -0500][ERROR] This is another error
 
 Транзакции
-------------
-Logging data to an adapter i.e. File (file system) is always an expensive operation in terms of performance. To combat that, you
-can take advantage of logging transactions. Transactions store log data temporarily in memory and later on write the data to the
-relevant adapter (File in this case) in a single atomic operation.
+----------
 Запись данных в адаптер т.е. в файл (файловая система) всегда является 'дорогостоющей' операцией с точки зрения производительности. 
 Для решения этой задачи, можно использовать транзакции при логировании. Транзакции временно хронят записи в памяти, а затем переносят их
 соответствующий адаптер (в данном случае в файл).
@@ -67,7 +64,7 @@ relevant adapter (File in this case) in a single atomic operation.
     $logger->commit();
 
 Одновременное логирование нескольких обработчиков
-----------------------------
+-------------------------------------------------
 :doc:`Phalcon\\Logger <../api/Phalcon_Logger>` позволяет отправку сообщений на несколько обработчиков одним вызовом:
 
 .. code-block:: php
@@ -86,7 +83,7 @@ relevant adapter (File in this case) in a single atomic operation.
 Сообщения отправляются на обработчик в порядке их регистраций.
 
 Форматирование сообщений
-------------------
+------------------------
 Данный компонент позволяет использовать 'formatters' для форматирования сообщений перед тем как их отправить на бэкенд. 
 Реализованные следующие форматеры:
 
@@ -101,7 +98,7 @@ relevant adapter (File in this case) in a single atomic operation.
 +---------+--------------------------------------------------+------------------------------------------------------------------------------------+
 
 Линейный Оформитель
-^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 Оформление записей в одну строку. Формат по умолчнию:
 
 [%date%][%type%] %message%
@@ -130,7 +127,7 @@ messages by defining your own. The log format variables allowed are:
     $logger->setFormatter($formatter);
 
 Реализация собственного оформителя
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The :doc:`Phalcon\\Logger\\FormatterInterface <../api/Phalcon_Logger_FormatterInterface>` interface must be implemented in order to
 create your own logger formatter or extend the existing ones.
 
