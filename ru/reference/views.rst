@@ -275,7 +275,7 @@ Dispatcher будет искать "PostsController" и его действие 
         public function showAction()
         {
             // Передать все посты в представление
-            $this->view->setVar("posts", Posts:find());
+            $this->view->setVar("posts", Posts::find());
         }
 
     }
@@ -655,7 +655,7 @@ Dispatcher будет искать "PostsController" и его действие 
             // Использование нескольких шаблонизаторов
             $this->view->registerEngines(
                 array(
-                    ".my-html" => 'MyTemplateAdapter'
+                    ".my-html" => 'MyTemplateAdapter',
                     ".phtml" => 'Phalcon\Mvc\View\Engine\Php'
                 )
             );
@@ -778,7 +778,7 @@ Dispatcher будет искать "PostsController" и его действие 
         $view->setViewsDir("../app/views/");
 
         // Назначение обработчика событий для компонента представления
-        $view->setEventsManager($eventManagers);
+        $view->setEventsManager($eventsManager);
 
         return $view;
 
