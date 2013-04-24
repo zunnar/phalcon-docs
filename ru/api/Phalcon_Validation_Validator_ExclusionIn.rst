@@ -43,5 +43,5 @@ public *mixed*  **isSetOption** (*string* $key) inherited from Phalcon\\Validati
 
 public *mixed*  **getOption** (*string* $key) inherited from Phalcon\\Validation\\Validator
 
-Возвращает значение определенного параметра, если же параметер не определен возращает null
+Возвращает значение определенного параметра, если же параметер не определен возращает null 
 
