@@ -37,13 +37,11 @@ Phalcon\\Validation\\Validator constructor
 
 public *mixed*  **isSetOption** (*string* $key) inherited from Phalcon\\Validation\\Validator
 
-Проверяет на определение опций
+Проверка, на определение параметров
 
 
 
 public *mixed*  **getOption** (*string* $key) inherited from Phalcon\\Validation\\Validator
 
-Возвращает опции, если они определенны; возвращает значение null если таковых нет
-
-
+Возвращает значение определенного параметра, если же параметер не определен возращает null
 
