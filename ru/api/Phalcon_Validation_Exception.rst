@@ -1,68 +1,66 @@
-Class **Phalcon\\Validation\\Exception**
+Класс **Phalcon\\Validation\\Exception**
 ========================================
 
-*extends* :doc:`Phalcon\\Exception <Phalcon_Exception>`
+*расширение* :doc:`Phalcon\\Exception <Phalcon_Exception>`
 
-Methods
+Методы
 ---------
 
 final private *Exception*  **__clone** () inherited from Exception
 
-Clone the exception
+Клонироние исключения
 
 
 
 public  **__construct** ([*string* $message], [*int* $code], [*Exception* $previous]) inherited from Exception
 
-Exception constructor
+Конструктор исключения
 
 
 
 final public *string*  **getMessage** () inherited from Exception
 
-Gets the Exception message
+Получение сообщения исключения
 
 
 
 final public *int*  **getCode** () inherited from Exception
 
-Gets the Exception code
+Получение кода исключения
 
 
 
 final public *string*  **getFile** () inherited from Exception
 
-Gets the file in which the exception occurred
+Получение файла в котором произошло исключение
 
 
 
 final public *int*  **getLine** () inherited from Exception
 
-Gets the line in which the exception occurred
+Получение строки в которой произошло исключение
 
 
 
 final public *array*  **getTrace** () inherited from Exception
 
-Gets the stack trace
+Получение трасировки стека
 
 
 
 final public *Exception*  **getPrevious** () inherited from Exception
 
-Returns previous Exception
+Вернуть предыдущее исключение
 
 
 
 final public *Exception*  **getTraceAsString** () inherited from Exception
 
-Gets the stack trace as a string
+Получение трассировки стека в виде строковой переменной
 
 
 
 public *string*  **__toString** () inherited from Exception
 
-String representation of the exception
-
-
+Строковое представление исключения
 
