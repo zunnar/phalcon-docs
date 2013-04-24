@@ -1,11 +1,11 @@
-Class **Phalcon\\Validation\\Validator\\StringLength**
+Класс **Phalcon\\Validation\\Validator\\StringLength**
 ======================================================
 
-*extends* :doc:`Phalcon\\Validation\\Validator <Phalcon_Validation_Validator>`
+*расширение* :doc:`Phalcon\\Validation\\Validator <Phalcon_Validation_Validator>`
 
-*implements* :doc:`Phalcon\\Validation\\ValidatorInterface <Phalcon_Validation_ValidatorInterface>`
+*реализация* :doc:`Phalcon\\Validation\\ValidatorInterface <Phalcon_Validation_ValidatorInterface>`
 
-Validates that a string has the specified maximum and minimum constraints  
+Проводит валидацию на указанное максимальное и минимальное ограничения длины строковой переменной
 
 .. code-block:: php
 
@@ -22,12 +22,12 @@ Validates that a string has the specified maximum and minimum constraints
 
 
 
-Methods
+Методы
 ---------
 
 public *boolean*  **validate** (:doc:`Phalcon\\Validation <Phalcon_Validation>` $validator, *string* $attribute)
 
-Executes the validation
+Выполняет валидацию
 
 
 
@@ -39,13 +39,11 @@ Phalcon\\Validation\\Validator constructor
 
 public *mixed*  **isSetOption** (*string* $key) inherited from Phalcon\\Validation\\Validator
 
-Checks if an option is defined
+Проверка, на определение параметров
 
 
 
 public *mixed*  **getOption** (*string* $key) inherited from Phalcon\\Validation\\Validator
 
-Returns an option in the validator's options Returns null if the option hasn't been set
-
-
+Возвращает значение определенного параметра, если же параметер не определен возращает null
 
