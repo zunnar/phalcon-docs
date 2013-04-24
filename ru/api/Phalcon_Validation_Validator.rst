@@ -1,7 +1,7 @@
-Class **Phalcon\\Validation\\Validator**
+Класс **Phalcon\\Validation\\Validator**
 ========================================
 
-This is a base class for validators
+Это базовый класс для валидаторов
 
 
 Methods
@@ -15,13 +15,11 @@ Phalcon\\Validation\\Validator constructor
 
 public *mixed*  **isSetOption** (*string* $key)
 
-Checks if an option is defined
+Проверка, на определение параметров
 
 
 
 public *mixed*  **getOption** (*string* $key)
 
-Returns an option in the validator's options Returns null if the option hasn't been set
-
-
+Возвращает значение определенного параметра, если же параметер не определен возращает null
 
