@@ -140,7 +140,7 @@ HTML разметки. Например, при указании любого т
 
 Из кода выше сформируется такой HTML результат:
 
-.. code-block:: html+php
+.. code-block:: html
 
     <form action="/store/products/search/" method="get">
          <label for="q">Search:</label>
