@@ -1,27 +1,25 @@
-Interface **Phalcon\\Validation\\ValidatorInterface**
+Интерфейс **Phalcon\\Validation\\ValidatorInterface**
 =====================================================
 
 Phalcon\\Validation\\ValidatorInterface initializer
 
 
-Methods
+Методы
 ---------
 
 abstract public *mixed*  **isSetOption** (*string* $key)
 
-Checks if an option is defined
+Проверка, на определение параметров
 
 
 
 abstract public *mixed*  **getOption** (*string* $key)
 
-Returns an option in the validator's options Returns null if the option hasn't been set
+Возвращает значение определенного параметра, если же параметер не определен возращает null
 
 
 
 abstract public  **validate** (*Phalcon\\Validator* $validator, *string* $attribute)
 
-Executes the validation
-
-
+Выполняет валидацию
 
