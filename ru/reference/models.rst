@@ -1,18 +1,17 @@
-Working with Models
+Работа с Моделями
 ===================
-A model represents the information (data) of the application and the rules to manipulate that data. Models are primarily used for managing
-the rules of interaction with a corresponding database table. In most cases, each table in your database will correspond to one model in
-your application. The bulk of your application's business logic will be concentrated in the models.
+Модель представляет собой информацию (данные) приложения и правила для манипуляции этими данными. Модели в основном используются для управления правилами 
+взаимодействия с соответствующими таблицами базы данных. В большинстве случаев, каждая таблица в вашей базе данных соответствует одной модели в вашем приложении.
+Большая часть всей бизнес-логики вашего приложения будет сосредоточена в моделях.
 
-:doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` is the base for all models in a Phalcon application. It provides database independence, basic
-CRUD functionality, advanced finding capabilities, and the ability to relate models to one another, among other services.
-:doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` avoids the need of having to use SQL statements because it translates methods dynamically
-to the respective database engine operations.
+:doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` является родительским классом для всех моделей в вашем приложении Phalcon. Он обеспечивает независимость данных 
+от вашей базы, основные CRUD операции, расширенные поисковые возможности, а также возможность построения зависимостей между моделями. 
+:doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` исключает необходимость использования SQL запросов, потому как данный класс динамически переводит методы на соответствующие им операции СУБД.
 
 .. highlights::
 
-    Models are intended to work on a database high layer of abstraction. If you need to work with databases at a lower level check out the
-    :doc:`Phalcon\\Db <../api/Phalcon_Db>` component documentation.
+    Модели предназначены для работы с базой данных на высшем уровне абстракции. Если вы испытваете потребность в работе с базой данных на низшем уровне, обратитесь к документации 
+    компонента :doc:`Phalcon\\Db <../api/Phalcon_Db>`.
 
 Creating Models
 ---------------
