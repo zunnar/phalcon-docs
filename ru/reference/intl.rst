@@ -90,11 +90,25 @@ API класса Locale.
 
     // Результат сравнения будет положительный, несмотря на ударение над "о"
     $collator->setStrength(Collator::PRIMARY);
-    $collator->compare("una canción", "una cancion");
+    var_dump($collator->compare("una canción", "una cancion"));
 
     // Результат сравнения будет отрицательный
-    $collator->setStrength(Collator::DEFAULT);
-    $collator->compare("una canción", "una cancion");
+    $collator->setStrength(Collator::DEFAULT_VALUE);
+    var_dump($collator->compare("una canción", "una cancion"));
+
+Транслитерация
+--------------
+Компонент Transliterator_ добавляет возможность транслитерации строк:
+
+.. code-block:: php
+
+    <?php
+
+    $id = "Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();";
+    $transliterator = Transliterator::create($id);
+
+    $string = "garçon-étudiant-où-L'école";
+    echo $transliterator->transliterate($string); // garconetudiantoulecole
 
 .. _PECL: http://pecl.php.net/package/intl
 .. _intl: http://pecl.php.net/package/intl
@@ -102,3 +116,4 @@ API класса Locale.
 .. _документации: http://www.php.net/manual/ru/book.intl.php
 .. _MessageFormatter: http://www.php.net/manual/ru/class.messageformatter.php
 .. _Collator: http://www.php.net/manual/ru/class.collator.php
+.. _Transliterator: http://www.php.net/manual/en/class.transliterator.php

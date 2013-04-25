@@ -138,7 +138,7 @@ Forms in web applications play an essential part in retrieving user input. The f
 
 This last code will generate the following HTML:
 
-.. code-block:: html+php
+.. code-block:: html
 
     <form action="/store/products/search/" method="get">
          <label for="q">Search:</label>
@@ -156,6 +156,8 @@ Same form generated in Volt:
         {{ text_field("q") }}
         {{ submit_button("Search") }}
     </form>
+
+Phalcon also provides a :doc:`form builder <forms>` to create forms in an object-oriented manner.
 
 Helpers to Generate Form Elements
 ---------------------------------
@@ -272,7 +274,7 @@ You can add an "empty" option to the generated HTML:
         array(
             'productId',
             Products::find("type = 'vegetables'"),
-            'using' => array('id', "name')
+            'using' => array('id', "name"),
             'useEmpty' => true,
             'emptyText' => 'Please, choose one...',
             'emptyValue' => '@'

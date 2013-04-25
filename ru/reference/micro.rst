@@ -94,7 +94,7 @@ which the route is constrained for:
     $app->patch('/api/products/update/{id}', "info_product");
 
     //Matches if the HTTP method is GET or POST
-    $app->map('/repos/store/refs')->via(array('GET', 'POST'));
+    $app->map('/repos/store/refs',"action_product")->via(array('GET', 'POST'));
 
 
 Routes with Parameters
@@ -212,7 +212,7 @@ by this way the "url" service can produce the corresponding URL:
 
     })->setName('show-post');
 
-    //produce a url somewhere
+    //produce an URL somewhere
     $app->get('/', function() use ($app) {
 
         echo '<a href="', $app->url->get(array(
@@ -279,7 +279,7 @@ The array-syntax is allowed to easily set/get services in the internal services 
 
 Not-Found Handler
 -----------------
-When a user tries to access a route that is not defined, the micro application will try to execute the "Not-Found" handler.
+When an user tries to access a route that is not defined, the micro application will try to execute the "Not-Found" handler.
 An example of that behavior is below:
 
 .. code-block:: php
@@ -377,19 +377,23 @@ In addition to the events manager, events can be added using the methods 'before
     $app = new Phalcon\Mvc\Micro();
 
     //Executed before every route executed
+    //Return false cancels the route execution
     $app->before(function() use ($app) {
         if ($app['session']->get('auth') == false) {
-
-            $app['flashSession']->error("The user isn't authenticated");
-            $app['response']->redirect("/error");
-
-            //Return false stops the normal execution
             return false;
         }
+        return true;
+    });
+
+    $app->map('/api/robots', function(){
+        return array(
+            'status' => 'OK'
+        );
     });
 
     $app->after(function() use ($app) {
         //This is executed after the route is executed
+        echo json_encode($app->getReturnedValue());
     });
 
     $app->finish(function() use ($app) {

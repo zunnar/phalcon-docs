@@ -43,14 +43,14 @@ Phalcon encapsulates the specific details of each database engine in dialects. T
 | SQLite     | SQL specific dialect for SQLite database system     | :doc:`Phalcon\\Db\\Dialect\\Sqlite <../api/Phalcon_Db_Dialect_Sqlite>`         |
 +------------+-----------------------------------------------------+--------------------------------------------------------------------------------+
 
+Implementing your own dialects
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The :doc:`Phalcon\\Db\\DialectInterface <../api/Phalcon_Db_DialectInterface>` interface must be implemented in order to create your own database dialects or extend the existing ones.
+
 Connecting to Databases
 -----------------------
 To create a connection it's neccesary instantiate the adapter class. It only requires an array with the connection parameters. The example
 below shows how to create a connection passing both required and optional parameters:
-
-Implementing your own dialects
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The :doc:`Phalcon\\Db\\DialectInterface <../api/Phalcon_Db_DialectInterface>` interface must be implemented in order to create your own database dialects or extend the existing ones.
 
 .. code-block:: php
 
@@ -248,7 +248,7 @@ To insert, update or delete rows, you can use raw SQL or use the preset function
     // Generating dynamically the necessary SQL
     $success = $connection->update(
        "robots",
-       array("name")
+       array("name"),
        array("New Astro Boy"),
        "id = 101"
     );
@@ -381,7 +381,7 @@ You can also create your own profile class based on :doc:`Phalcon\\Db\\Profiler 
 
     }
 
-    //Create a EventsManager
+    //Create an EventsManager
     $eventsManager = new Phalcon\Events\Manager();
 
     //Create a listener

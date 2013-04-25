@@ -43,7 +43,7 @@ registered user can manage his/her products and customers.
 Routing
 -------
 INVO uses the standard route that is built-in with the Router component. These routes matches the following
-pattern: /:controller/:action/:params. This means that the first part of a URI is the controller, the second the
+pattern: /:controller/:action/:params. This means that the first part of an URI is the controller, the second the
 action and the rest are the parameters.
 
 The following route /session/register executes the controller SessionController and its action registerAction.
@@ -519,7 +519,7 @@ User Components
 ---------------
 All the UI elements and visual style of the application has been achieved mostly through `Twitter Bootstrap`_.
 Some elements, such as the navigation bar changes according to the state of the application. For example, in the
-upper right corner, the link "Log in / Sign Up" changes to "Log out" if a user is logged into the application.
+upper right corner, the link "Log in / Sign Up" changes to "Log out" if an user is logged into the application.
 
 This part of the application is implemented in the component "Elements" (app/library/Elements.php).
 
@@ -697,9 +697,7 @@ In this case, we previously queried the records in this table in order to facili
 All the "product types" are queried and passed to the view as a local variable "productTypes". Then, in the view
 (app/views/index.phtml) we show a "select" tag filled with those results:
 
-.. code-block:: php
-
-    <?php
+.. code-block:: html+php
 
     <div>
         <label for="product_types_id">Product Type</label>
@@ -841,11 +839,11 @@ In the creation case, we recover the data submitted and assign them to a new "pr
     {
 
         $products = new Products();
-        $products->id = $request->getPost("id", "int");
-        $products->product_types_id = $request->getPost("product_types_id", "int");
-        $products->name = $request->getPost("name", "striptags");
-        $products->price = $request->getPost("price", "double");
-        $products->active = $request->getPost("active");
+        $products->id = $this->request->getPost("id", "int");
+        $products->product_types_id = $this->request->getPost("product_types_id", "int");
+        $products->name = $this->request->getPost("name", "striptags");
+        $products->price = $this->request->getPost("price", "double");
+        $products->active = $this->request->getPost("active");
 
         //...
 

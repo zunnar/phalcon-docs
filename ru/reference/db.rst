@@ -6,7 +6,8 @@ in the framework. It consists of an independent high-level abstraction layer for
 This component allows for a lower level database manipulation than using traditional models.
 
 .. highlights::
-    This guide is not intended to be a complete documentation of available methods and their arguments. Please visit the :doc:`API <../api/index>`
+
+		This guide is not intended to be a complete documentation of available methods and their arguments. Please visit the :doc:`API <../api/index>`
     for a complete reference.
 
 Database Adapters
@@ -43,14 +44,14 @@ Phalcon encapsulates the specific details of each database engine in dialects. T
 | SQLite     | SQL specific dialect for SQLite database system     | :doc:`Phalcon\\Db\\Dialect\\Sqlite <../api/Phalcon_Db_Dialect_Sqlite>`         |
 +------------+-----------------------------------------------------+--------------------------------------------------------------------------------+
 
+Implementing your own dialects
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The :doc:`Phalcon\\Db\\DialectInterface <../api/Phalcon_Db_DialectInterface>` interface must be implemented in order to create your own database dialects or extend the existing ones.
+
 Connecting to Databases
 -----------------------
 To create a connection it's neccesary instantiate the adapter class. It only requires an array with the connection parameters. The example
 below shows how to create a connection passing both required and optional parameters:
-
-Implementing your own dialects
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The :doc:`Phalcon\\Db\\DialectInterface <../api/Phalcon_Db_DialectInterface>` interface must be implemented in order to create your own database dialects or extend the existing ones.
 
 .. code-block:: php
 
@@ -248,7 +249,7 @@ To insert, update or delete rows, you can use raw SQL or use the preset function
     // Generating dynamically the necessary SQL
     $success = $connection->update(
        "robots",
-       array("name")
+       array("name"),
        array("New Astro Boy"),
        "id = 101"
     );
@@ -268,17 +269,23 @@ Database Events
 ---------------
 :doc:`Phalcon\\Db <../api/Phalcon_Db>` is able to send events to a :doc:`EventsManager <events>` if it's present. Some events when returning boolean false could stop the active operation. The following events are supported:
 
-+------------------+-----------------------------------------------------------+---------------------+
-| Event Name       | Triggered                                                 | Can stop operation? |
-+==================+===========================================================+=====================+
-| afterConnect     | After a successfully connection to a database system      | No                  |
-+------------------+-----------------------------------------------------------+---------------------+
-| beforeQuery      | Before send a SQL statement to the database system        | Yes                 |
-+------------------+-----------------------------------------------------------+---------------------+
-| afterQuery       | After send a SQL statement to database system             | No                  |
-+------------------+-----------------------------------------------------------+---------------------+
-| beforeDisconnect | Before close a temporal database connection               | No                  |
-+------------------+-----------------------------------------------------------+---------------------+
++---------------------+-----------------------------------------------------------+---------------------+
+| Event Name          | Triggered                                                 | Can stop operation? |
++=====================+===========================================================+=====================+
+| afterConnect        | After a successfully connection to a database system      | No                  |
++---------------------+-----------------------------------------------------------+---------------------+
+| beforeQuery         | Before send a SQL statement to the database system        | Yes                 |
++---------------------+-----------------------------------------------------------+---------------------+
+| afterQuery          | After send a SQL statement to database system             | No                  |
++---------------------+-----------------------------------------------------------+---------------------+
+| beforeDisconnect    | Before close a temporal database connection               | No                  |
++---------------------+-----------------------------------------------------------+---------------------+
+| beginTransaction    | Before a transaction is going to be started               | No                  |
++---------------------+-----------------------------------------------------------+---------------------+
+| rollbackTransaction | Before a transaction in the transaction                   | No                  |
++---------------------+-----------------------------------------------------------+---------------------+
+| commitTransaction   | Before a transaction the transaction is commite           | No                  |
++---------------------+------------------------------------------------------------+--------------------+
 
 Bind an EventsManager to a connection is simple, Phalcon\\Db will trigger the events with the type "db":
 
@@ -375,7 +382,7 @@ You can also create your own profile class based on :doc:`Phalcon\\Db\\Profiler 
 
     }
 
-    //Create a EventsManager
+    //Create an EventsManager
     $eventsManager = new Phalcon\Events\Manager();
 
     //Create a listener
