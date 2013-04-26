@@ -1,7 +1,7 @@
-Class **Phalcon\\Acl**
+Класс **Phalcon\\Acl**
 ======================
 
-Constants
+Константы
 ---------
 
 *integer* **ALLOW**
