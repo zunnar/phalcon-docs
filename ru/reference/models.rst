@@ -13,10 +13,10 @@
     Модели предназначены для работы с базой данных на высшем уровне абстракции. Если вы испытваете потребность в работе с базой данных на низшем уровне, обратитесь к документации 
     компонента :doc:`Phalcon\\Db <../api/Phalcon_Db>`.
 
-Creating Models
+Создание Модели
 ---------------
-A model is a class that extends from :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`. It must be placed in the models directory. A model
-file must contain a single class; its class name should be in camel case notation:
+Модель это класс, который расширяет :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`. Файл с моделью должен быть помещен в директорию models. 
+Файл должен содержать только один класс; его имя должно быть записано в CamelCase стиле.
 
 .. code-block:: php
 
@@ -27,18 +27,17 @@ file must contain a single class; its class name should be in camel case notatio
 
     }
 
-The above example shows the implementation of the "Robots" model. Note that the class Robots inherits from :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`.
-This component provides a great deal of functionality to models that inherit it, including basic database
-CRUD (Create, Read, Update, Destroy) operations, data validation, as well as sophisticated search support and the ability to relate multiple models
-with each other.
+Пример выше демонстрирует реализацию модели "Robots". Обратите внимание, что класс Robots наследуется от :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`. 
+Данный компонент предоставляет большой набор функционала для модели, которая наследует его, включая основные операции CRUD (Create, Read, Update, Destroy), 
+валидацию данных, а также поддержку усложненного поиска и возможность связывать несколько моделей друг с другом.
 
 .. highlights::
 
-    If you're using PHP 5.4 is recommended declare each column that makes part of the model in order to save
-    memory and reduce the memory allocation.
+    Если вы используете PHP 5.4 рекомендованно объявлять каждый столбец базы данных, который входит в модель в целях экономии памяти и 
+    уменьшения выделения памяти на выполнение.
 
-By default model "Robots" will refer to the table "robots". If you want to manually specify another name for the mapping table,
-you can use the getSource() method:
+По умолчанию модель "Robots" будет ссылаться на таблицу 'robots'. Если вы захотите вручную указать другое имя для маппинга таблицы,
+вы можете использовать метод getSource():
 
 .. code-block:: php
 
@@ -54,8 +53,8 @@ you can use the getSource() method:
 
     }
 
-The model Robots now maps to "the_robots" table. The initialize() method aids in setting up the model with a custom behavior i.e. a different table.
-The initialize() method is only called once during the request.
+Теперь модель Robots маппирует таблицу "the_robots". Метод initialize() помогает в создании модели с пользовательским поведением, т.е. использовании другой таблицы. 
+Метод initialize() вызывает лишь однажды во время запроса.
 
 Models in Namespaces
 --------------------
