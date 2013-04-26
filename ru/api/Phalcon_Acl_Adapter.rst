@@ -1,53 +1,51 @@
-Class **Phalcon\\Acl\\Adapter**
+Класс **Phalcon\\Acl\\Adapter**
 ===============================
 
-*implements* :doc:`Phalcon\\Events\\EventsAwareInterface <Phalcon_Events_EventsAwareInterface>`
+*реализации* :doc:`Phalcon\\Events\\EventsAwareInterface <Phalcon_Events_EventsAwareInterface>`
 
-Adapter for Phalcon\\Acl adapters
+Адаптер для Phalcon\\Acl даптеров
 
 
-Methods
+Методы
 ---------
 
 public  **setEventsManager** (:doc:`Phalcon\\Events\\ManagerInterface <Phalcon_Events_ManagerInterface>` $eventsManager)
 
-Sets the events manager
+Устанавливает менеджер событий
 
 
 
 public :doc:`Phalcon\\Events\\ManagerInterface <Phalcon_Events_ManagerInterface>`  **getEventsManager** ()
 
-Returns the internal event manager
+Возвращает внутренний менеджер событий
 
 
 
 public  **setDefaultAction** (*int* $defaultAccess)
 
-Sets the default access level (Phalcon\\Acl::ALLOW or Phalcon\\Acl::DENY)
+Устанавливает уровень доступа по умолчанию (Phalcon\\Acl::ALLOW or Phalcon\\Acl::DENY)
 
 
 
 public *int*  **getDefaultAction** ()
 
-Returns the default ACL access level
+Получает уровень доступа ACL по умолчанию
 
 
 
 public *string*  **getActiveRole** ()
 
-Returns the role which the list is checking if it's allowed to certain resource/access
+Получает правило, из списка проверенных, которое дает доступ к определенным ресурсам / правам
 
 
 
 public *string*  **getActiveResource** ()
 
-Returns the resource which the list is checking if some role can access it
+Получить доступ к списку доступных ресурсов если таковые имеются
 
 
 
 public *string*  **getActiveAccess** ()
 
-Returns the access which the list is checking if some role can access it
-
-
+Получить доступ к списку доступных правил если таковые имеются
 
